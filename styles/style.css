@@ -1,0 +1,4 @@
+/* for general styling */
+.navbar-nav .nav-link.active {
+    background-color: red;
+}
