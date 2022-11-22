@@ -1,1 +1,1 @@
-# Frontend template using navigo routing.
+# Computer Science KEA - 3rd semester exam project.
