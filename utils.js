@@ -100,3 +100,22 @@ export function encode(str) {
   str = str.replace(/'/g, "&#039;");
   return str;
 }
+
+
+export async function checkAccess(role){
+  const loginUrl = "http://localhost:8080/api/login/" + role;
+  const token = "Bearer " + localStorage.getItem("token")
+
+  const options = {}
+  options.method = "GET"
+  options.headers = {"Content-type": "application/json"}
+  options.headers = {"Authorization": token}
+  
+  try{
+  const response = await fetch(loginUrl, options).then(handleHttpErrors)
+  return true;
+  }
+  catch(e){
+     return false;
+  }
+}

@@ -1,8 +1,14 @@
 const loginUrl = "http://localhost:8080/api/auth/login";
+import { handleHttpErrors } from "../../utils.js";
+
+export function initLogin(){
+    window.addEventListener("load",login())
+}
 
 
+async function login(){
+    document.querySelector("#btn-user-login").onclick = checkLogin
 
-document.querySelector("#btn-user-login").onclick = checkLogin
 
 async function checkLogin(){
 
@@ -14,13 +20,9 @@ async function checkLogin(){
     options.method = "POST"
     options.headers = {"Content-type": "application/json"}
     options.body = JSON.stringify(userDetails)
-    const updateScreening = await fetch(loginUrl, options).then(handleHttpErrors)
+    const response = await fetch(loginUrl, options).then(handleHttpErrors)
 
-        const username = userDetails.username;
-        const user = await getUserFromUsername(username);
-
-        localStorage.setItem("role", user.role);
-        localStorage.setItem("username",userDetails.username)
-        localStorage.setItem("token", userDetails.token)
-        location.replace("/")
+        localStorage.setItem("token", response.token)
+        
+}
 }
