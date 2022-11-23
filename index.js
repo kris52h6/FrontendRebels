@@ -43,6 +43,7 @@ window.addEventListener("load", async () => {
         renderTemplate(templateLogin, "content");
         initLogin();  
       },
+      
 
 
       "/admintest": () => {
