@@ -7,12 +7,12 @@ import {
   checkAccess
 } from "./utils.js";
 
-import { initTemplate } from "./pages/template/template.js";
+import { initAllMatches } from "./pages/allMatches/allMatches.js";
 import {initLogin} from "./pages/login/login.js";
 import {initCheckAccess} from "./pages/admintest/admintest.js";
 
 window.addEventListener("load", async () => {
-  const templateTemplate = await loadHtml("./pages/template/template.html");
+  const templateMatches = await loadHtml("./pages/allMatches/allMatches.html");
   const templateHome = await loadHtml("./pages/home/home.html");
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
   const templateLogin = await loadHtml("./pages/login/login.html");
@@ -35,9 +35,9 @@ window.addEventListener("load", async () => {
       "/": () => {
         renderTemplate(templateHome, "content");
       },
-      "/template": () => {
-        renderTemplate(templateTemplate, "content");
-        initTemplate();
+      "/matches": () => {
+        renderTemplate(templateMatches, "content");
+        initAllMatches();
       },
       "/login": () => {
         renderTemplate(templateLogin, "content");
