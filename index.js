@@ -12,9 +12,11 @@ import {initLogin} from "./pages/login/login.js";
 import {initCheckAccess} from "./pages/admintest/admintest.js";
 import {initCreateUser} from "./pages/createUser/createUser.js";
 import {initCreateReferee} from "./pages/createReferee/createReferee.js";
+import {initMatch} from "./pages/match/match.js"
 
 window.addEventListener("load", async () => {
   const templateMatches = await loadHtml("./pages/allMatches/allMatches.html");
+  const templateMatch = await loadHtml("./pages/match/match.html")
   const templateHome = await loadHtml("./pages/home/home.html");
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
   const templateLogin = await loadHtml("./pages/login/login.html");
@@ -42,6 +44,10 @@ window.addEventListener("load", async () => {
       "/matches": () => {
         renderTemplate(templateMatches, "content");
         initAllMatches();
+      },
+      "/match": () => {
+        renderTemplate(templateMatch, "content")
+        initMatch();
       },
       "/login": () => {
         renderTemplate(templateLogin, "content");
