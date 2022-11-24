@@ -16,6 +16,7 @@ import {initEditReferee} from "./pages/editReferee/editReferee.js"
 import {initEditRefereePassword} from "./pages/editRefereePassword/editRefereePassword.js"
 import {initMatch} from "./pages/match/match.js"
 import {initGetReferees} from "./pages/getReferees/getReferees.js"
+import {initMakeAdmin} from "./pages/makeAdmin/makeAdmin.js"
 
 window.addEventListener("load", async () => {
   const templateMatches = await loadHtml("./pages/allMatches/allMatches.html");
@@ -30,6 +31,7 @@ window.addEventListener("load", async () => {
   const templateEditReferee = await loadHtml("./pages/editReferee/editReferee.html")
   const templateEditRefereePassword = await loadHtml("./pages/editRefereePassword/editRefereePassword.html")
   const templateGetReferees = await loadHtml("./pages/getReferees/getReferees.html")
+  const templateMakeAdmin = await loadHtml("./pages/makeAdmin/makeAdmin.html")
 
   adjustForMissingHash();
 
@@ -75,9 +77,13 @@ window.addEventListener("load", async () => {
         renderTemplate(templateEditRefereePassword, "content")
         initEditRefereePassword();
       },
-      "/getRefrees" : () =>{
+      "/getReferees" : () =>{
         renderTemplate(templateGetReferees, "content")
         initGetReferees();
+      },
+        "/makeAdmin" : () => {
+        renderTemplate(templateMakeAdmin, "content")
+        initMakeAdmin();
       },
       "/admintest": () => {
         const hasAccess = checkAccess("admin").then(result =>{

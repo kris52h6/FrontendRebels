@@ -11,6 +11,7 @@ export function initGetReferees(){
 async function setup(){
     const referees = await getAllReferees()
 
+
     displayMatches(referees)
    // makeTableRowsLinks(matches)
 }
@@ -45,7 +46,7 @@ function displayMatches(referees){
             <td>${r.email}</td>
             <td>${r.license}</td>
             <td>${r.roles}</td>
-            <td><a href="#" onClick="makeAdmin(${r.username})>Gør til admin</a></td>
+            <td><a href="#/makeAdmin?username=${r.username}">Make Admin</a></td>
         </tr>
         `
     )

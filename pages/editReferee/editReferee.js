@@ -48,9 +48,5 @@ async function editReferee(){
         document.querySelector("#input-user-lastname").value = refereeInfo.lastname
         document.querySelector("#input-user-bankinformation").value = refereeInfo.bankInformation
         document.querySelector("#input-user-license").value = refereeInfo.license
-
-
-    
-
     }
 }
