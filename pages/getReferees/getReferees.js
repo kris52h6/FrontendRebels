@@ -45,7 +45,7 @@ function displayMatches(referees){
             <td>${r.email}</td>
             <td>${r.license}</td>
             <td>${r.roles}</td>
-            <td><a href="javascript:makeAdmin(${r.username}">Gør til admin</a></td>
+            <td><a href="#" onClick="makeAdmin(${r.username})>Gør til admin</a></td>
         </tr>
         `
     )
