@@ -13,6 +13,7 @@ import {initCheckAccess} from "./pages/admintest/admintest.js";
 import {initCreateUser} from "./pages/createUser/createUser.js";
 import {initCreateReferee} from "./pages/createReferee/createReferee.js";
 import {initEditReferee} from "./pages/editReferee/editReferee.js"
+import {initEditRefereePassword} from "./pages/editRefereePassword/editRefereePassword.js"
 
 window.addEventListener("load", async () => {
   const templateMatches = await loadHtml("./pages/allMatches/allMatches.html");
@@ -24,6 +25,7 @@ window.addEventListener("load", async () => {
   const templateCreateUser = await loadHtml("./pages/createUser/createUser.html")
   const templateCreateReferee = await loadHtml("./pages/createReferee/createReferee.html")
   const templateEditReferee = await loadHtml("./pages/editReferee/editReferee.html")
+  const templateEditRefereePassword = await loadHtml("./pages/editRefereePassword/editRefereePassword.html")
 
   adjustForMissingHash();
 
@@ -60,6 +62,10 @@ window.addEventListener("load", async () => {
       "editReferee": () => {
         renderTemplate(templateEditReferee, "content")
         initEditReferee();
+      },
+      "editRefereePassword" : () => {
+        renderTemplate(templateEditRefereePassword, "content")
+        initEditRefereePassword();
       },
       "/admintest": () => {
         const hasAccess = checkAccess("admin").then(result =>{
