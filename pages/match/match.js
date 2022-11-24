@@ -6,16 +6,17 @@ const addSignUpUrl = "http://localhost:8080/api/signups";
 const refereeUrl = "http://localhost:8080/api/users/referee";
 let teamsKeyValue = new Map();
 let user;
+let matchId;
 
 export function initMatch() {
     setup();
 }
 
 async function setup() {
-    const id = getMatchIdFromUrl();
-    const match = await fetch(matchesUrl + id).then(handleHttpErrors);
+    matchId = getMatchIdFromUrl();
+    const match = await fetch(matchesUrl + matchId).then(handleHttpErrors);
     const teams = await fetch(teamsUrl).then(handleHttpErrors);
-    const signups = await fetch(signupsUrl + id).then(handleHttpErrors);
+    const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
     createKeyValuePairs(teams);
     displayMatch(match);
     displaySignups(signups);
@@ -24,6 +25,7 @@ async function setup() {
 
 async function displaySignups(signups) {
     const signupList = document.querySelector("#signup-list");
+    signupList.innerHTML = "";
     let listData = signups
         .map(
             (s) =>
@@ -33,9 +35,11 @@ async function displaySignups(signups) {
         )
         .join("\n");
     signupList.innerHTML = DOMPurify.sanitize(listData);
-    document.querySelector("#signup-button").addEventListener("click", () => {
-        addSignUp();
-    });
+
+    document.querySelector("#signup-button").onclick = addSignUp;
+    // document.querySelector("#signup-button").addEventListener("mouseup", () => {
+    //     addSignUp();
+    // });
 }
 
 function getMatchIdFromUrl() {
@@ -59,7 +63,7 @@ function createKeyValuePairs(teams) {
 
 async function addSignUp() {
     const signUpObject = {};
-    signUpObject.matchId = getMatchIdFromUrl();
+    signUpObject.matchId = matchId;
     signUpObject.refereeUsername = user.username;
     signUpObject.position = "ref";
 
@@ -69,6 +73,9 @@ async function addSignUp() {
     options.body = JSON.stringify(signUpObject);
 
     const addSignUp = await fetch(addSignUpUrl, options).then(handleHttpErrors);
+
+    const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
+    displaySignups(signups);
 }
 
 async function getUser() {
