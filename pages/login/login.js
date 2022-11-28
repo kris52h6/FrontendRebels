@@ -24,5 +24,6 @@ async function checkLogin(){
 
         localStorage.setItem("token", response.token)
         
+        location.replace("/")
 }
 }
