@@ -17,6 +17,7 @@ import {initEditRefereePassword} from "./pages/editRefereePassword/editRefereePa
 import {initMatch} from "./pages/match/match.js"
 import {initGetReferees} from "./pages/getReferees/getReferees.js"
 import {initMakeAdmin} from "./pages/makeAdmin/makeAdmin.js"
+import {initMyProfile} from "./pages/myProfile/myProfile.js"
 
 window.addEventListener("load", async () => {
   const templateMatches = await loadHtml("./pages/allMatches/allMatches.html");
@@ -32,6 +33,7 @@ window.addEventListener("load", async () => {
   const templateEditRefereePassword = await loadHtml("./pages/editRefereePassword/editRefereePassword.html")
   const templateGetReferees = await loadHtml("./pages/getReferees/getReferees.html")
   const templateMakeAdmin = await loadHtml("./pages/makeAdmin/makeAdmin.html")
+  const templateMyProfile = await loadHtml("./pages/myProfile/myProfile.html")
 
   adjustForMissingHash();
 
@@ -100,7 +102,6 @@ window.addEventListener("load", async () => {
       },
       "/dommertest": () => {
         const hasAccess = checkAccess("dommer").then(result =>{
-
           if(result){
             console.log("Sucess")
             renderTemplate(templateDommertest,"content");
@@ -110,6 +111,9 @@ window.addEventListener("load", async () => {
             console.log("Failed")
             renderTemplate(templateHome, "content");
           } } )
+      }, "/myProfile": () => {
+        renderTemplate(templateMyProfile, "content");
+        initMyProfile();
       }
 
     })
