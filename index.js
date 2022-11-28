@@ -59,7 +59,7 @@ window.addEventListener("load", async () => {
       },
       "/login": () => {
         renderTemplate(templateLogin, "content");
-        initLogin();  
+        initLogin();
       },
       "/createUser": () => {
         renderTemplate(templateCreateUser, "content");
@@ -98,7 +98,6 @@ window.addEventListener("load", async () => {
             renderTemplate(templateHome, "content");
           } } )
       },
-
       "/dommertest": () => {
         const hasAccess = checkAccess("dommer").then(result =>{
 
@@ -112,9 +111,8 @@ window.addEventListener("load", async () => {
             renderTemplate(templateHome, "content");
           } } )
       }
-      
-    })
 
+    })
     .notFound(() => {
       renderTemplate(templateNotFound, "content");
     })

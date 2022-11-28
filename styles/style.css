@@ -1,4 +1,35 @@
 /* for general styling */
 .navbar-nav .nav-link.active {
-    background-color: red;
+    text-decoration: underline;
+    color:white;
 }
+
+.container-fluid {
+    background-color: #013369;
+    color:white;
+    padding: 0;
+}
+
+.container-fluid a {
+    color:white;
+
+}
+
+.navbar {
+    padding: 0;
+}
+
+#nav-name {
+    text-decoration: none;
+    width: 100px;
+    justify-content: center;
+}
+
+#nav-name a {
+
+}
+
+#nav-name.active{
+    color: white;
+}
+
