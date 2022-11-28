@@ -1,12 +1,30 @@
 <div class="template">
-  <h1>Alle kampe</h1>
-  <table class="table">
-    <thead>
-      <th>Hjemmehold</th>
-      <th>Udehold</th>
-      <th>Division</th>
-      <th>Starttid</th>
-    </thead>
-    <tbody id="tbody" ></tbody>
-  </table>
+    <h1>Kampe</h1>
+    <div id="match-content"></div>
+    <template id="match-template">
+        <div class="col-6 left">
+            <div class="top">
+                <h5 class="match-time"></h5>
+            </div>
+            <div class="col-12 bottom">
+                <div class="col-5 hometeam">
+                    <h4 class="hometeam-h2"></h4>
+                    <img class="hometeam-img" src="" />
+                </div>
+                <h4>-</h4>
+                <div class="col-5 awayteam">
+                    <img class="awayteam-img" src="" />
+                    <h4 class="awayteam-h2"></h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 right">
+            <div class="top">
+                <h5>Dommerhold</h5>
+            </div>
+            <div class="bottom">
+                <h4 class="refereeTeam">Søllerød Golddiggers</h4>
+            </div>
+        </div>
+    </template>
 </div>

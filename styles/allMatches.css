@@ -1,0 +1,42 @@
+.top {
+    display: flex;
+    justify-content: center;
+}
+
+
+.match {
+    display: flex;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 2px 2px;
+    margin-bottom: 10px;
+    padding: 1vw;
+    cursor: pointer;
+}
+
+.match h4 {
+    font-size: 1.1rem;
+}
+
+.left {
+    border-right: 1px solid black;
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-around;
+}
+
+.hidden {
+    display: none;
+}
+
+.hometeam, .awayteam {
+    display: flex;
+    justify-content: center;
+}
+
+.match img {
+    width: 30px;
+    height: 30px;
+}
