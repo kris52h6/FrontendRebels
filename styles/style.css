@@ -1,18 +1,30 @@
 /* for general styling */
 .navbar-nav .nav-link.active {
-    text-decoration: underline;
     color:white;
+    text-decoration: underline;
+    --bs-navbar-active-color: white;
+   
+}
+
+.navbar-nav{
+    --bs-navbar-hover-color: #fce6ac;
 }
 
 .container-fluid {
     background-color: #013369;
     color:white;
     padding: 0;
+    height: 70px;
+    font-size: 1.2em;
 }
 
 .container-fluid a {
     color:white;
+}
 
+#nav-name:hover{
+    text-decoration: none;
+    color:white
 }
 
 .navbar {
@@ -21,12 +33,12 @@
 
 #nav-name {
     text-decoration: none;
-    width: 100px;
-    justify-content: center;
+    font-weight: bolder;
 }
 
-#nav-name a {
-
+#nav-name-box{
+    margin: auto;
+    margin-right: 20px;
 }
 
 #nav-name.active{
