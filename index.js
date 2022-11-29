@@ -18,6 +18,8 @@ import {initMatch} from "./pages/match/match.js"
 import {initGetReferees} from "./pages/getReferees/getReferees.js"
 import {initMakeAdmin} from "./pages/makeAdmin/makeAdmin.js"
 import {initMyProfile} from "./pages/myProfile/myProfile.js"
+import {initLogout} from "./pages/logout/logout.js"
+
 
 window.addEventListener("load", async () => {
   const templateMatches = await loadHtml("./pages/allMatches/allMatches.html");
@@ -34,6 +36,7 @@ window.addEventListener("load", async () => {
   const templateGetReferees = await loadHtml("./pages/getReferees/getReferees.html")
   const templateMakeAdmin = await loadHtml("./pages/makeAdmin/makeAdmin.html")
   const templateMyProfile = await loadHtml("./pages/myProfile/myProfile.html")
+  const templateLogout = await loadHtml("./pages/logout/logout.html")
 
   adjustForMissingHash();
 
@@ -95,6 +98,10 @@ window.addEventListener("load", async () => {
             console.log("Failed")
             renderTemplate(templateHome, "content");
           } } )
+      },
+      "/logout": () => {
+        renderTemplate(templateLogout, "content");
+        initLogout();
       },
       "/dommertest": () => {
         const hasAccess = checkAccess("dommer").then(result =>{
