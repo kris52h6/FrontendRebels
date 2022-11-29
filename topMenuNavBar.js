@@ -15,6 +15,9 @@ async function checkLoginStatusAndCreateNavBar(){
     for(let i = 0; i < accessOptions.length; i++){
         checkAccess(accessOptions[i]).then(result =>{
             if(result){
+                if(accessOptions[i] == "admin"){
+                    createAdminNavBar()
+                }
               console.log("Sucess")
               createNavBar(true)
               i = accessOptions.length;
@@ -25,11 +28,29 @@ async function checkLoginStatusAndCreateNavBar(){
         else if(i === accessOptions.length-1 && !success){
             createNavBar(false)
         }})
-
-
     }
+}
+
+/*
+                        <li class="nav-item">
+                            <a class="nav-link" href="/getReferees" data-navigo>Alle dommere</a>
+                        </li>
+ */
+function createAdminNavBar(){
+    const li = document.createElement("li")
+    li.setAttribute("class", "nav-item nav-admin")
 
 
+
+    const a = document.createElement("a")
+    a.className = "nav-link"
+    a.setAttribute("href", "/getReferees")
+    a.setAttribute("data-navigo", true)
+    a.textContent = "Alle dommere"
+
+    li.append(a)
+
+    document.querySelector("#menu").append(li)
 }
 
 async function getUserFromUrl(){
@@ -110,6 +131,9 @@ export function createNavBar(isLoggedIn){
     else{
         if(document.querySelector("#dropdown-logged-in")){
             document.querySelector("#dropdown-logged-in").remove()
+        }
+        if(document.querySelector(".nav-admin")){
+            document.querySelector(".nav-admin").remove()
         }
         const a = document.createElement("a")
         a.setAttribute("href", "/#/login")

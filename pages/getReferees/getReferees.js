@@ -17,8 +17,12 @@ async function setup(){
 }
 
 async function getAllReferees(){
-    const matches = await fetch(refereesUrl).then(handleHttpErrors);
-    return matches
+    const token = "Bearer " + localStorage.getItem("token")
+    const options = {}
+    options.method = "GET"
+    options.headers = {"Authorization": token}
+    const referees = await fetch(refereesUrl, options).then(handleHttpErrors)
+    return referees
 }
 
 async function makeAdmin(username){

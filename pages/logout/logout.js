@@ -9,5 +9,6 @@ export function initLogout(){
 function logout(){
     localStorage.removeItem("token")
     createNavBar(false)
+
     location.replace("/#/")
 }

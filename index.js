@@ -10,7 +10,6 @@ import {
 import { initAllMatches } from "./pages/allMatches/allMatches.js";
 import {initLogin} from "./pages/login/login.js";
 import {initCheckAccess} from "./pages/admintest/admintest.js";
-import {initCreateUser} from "./pages/createUser/createUser.js";
 import {initCreateReferee} from "./pages/createReferee/createReferee.js";
 import {initEditReferee} from "./pages/editReferee/editReferee.js"
 import {initEditRefereePassword} from "./pages/editRefereePassword/editRefereePassword.js"
@@ -79,8 +78,14 @@ window.addEventListener("load", async () => {
         initEditRefereePassword();
       },
       "/getReferees" : () =>{
-        renderTemplate(templateGetReferees, "content")
-        initGetReferees();
+        const hasAccess = checkAccess("admin").then(result => {
+            if(result){
+                renderTemplate(templateGetReferees, "content")
+                initGetReferees();
+            }else {
+                router.navigate("/#/")
+            }
+        })
       },
         "/makeAdmin" : () => {
         renderTemplate(templateMakeAdmin, "content")
@@ -88,7 +93,6 @@ window.addEventListener("load", async () => {
       },
       "/admintest": () => {
         const hasAccess = checkAccess("admin").then(result =>{
-
           if(result){
             console.log("Sucess")
             renderTemplate(templateAdmintest,"content");
