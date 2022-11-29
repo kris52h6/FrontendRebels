@@ -63,10 +63,6 @@ window.addEventListener("load", async () => {
         renderTemplate(templateLogin, "content");
         initLogin();
       },
-      "/createUser": () => {
-        renderTemplate(templateCreateUser, "content");
-        initCreateUser();
-      },
       "/createReferee": () => {
         renderTemplate(templateCreateReferee, "content");
         initCreateReferee();

@@ -30,7 +30,8 @@ async function editReferee(){
         options.headers = myHeaders
         options.body = JSON.stringify(refreeUpdates)
         console.log(options)
-        const addUser = await fetch(refereeUrl, options).then(handleHttpErrors)
+        const addUser = await fetch(refereeUrl, options)
+        location.replace("/#/myProfile")
     }
 
     async function getUserInfo(){
@@ -48,5 +49,6 @@ async function editReferee(){
         document.querySelector("#input-user-lastname").value = refereeInfo.lastname
         document.querySelector("#input-user-bankinformation").value = refereeInfo.bankInformation
         document.querySelector("#input-user-license").value = refereeInfo.license
+        
     }
 }

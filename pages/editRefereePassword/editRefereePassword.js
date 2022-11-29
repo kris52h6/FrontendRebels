@@ -15,7 +15,6 @@ async function editReferee(){
         refreeUpdates.password = document.querySelector("#input-user-password").value
         const token = "Bearer " + localStorage.getItem("token")
 
-        console.log(refreeUpdates);
         const options = {}
 
         const myHeaders = new Headers();
@@ -26,8 +25,8 @@ async function editReferee(){
         options.method = "PATCH"
         options.headers = myHeaders
         options.body = JSON.stringify(refreeUpdates)
-        console.log(options)
-        const addUser = await fetch(refreeUrlChangePassword, options).then(handleHttpErrors)
+        const addUser = await fetch(refreeUrlChangePassword, options)
+        location.replace("/#/myProfile")
     }
 
     async function getUserInfo(){
