@@ -8,10 +8,23 @@
     display: flex;
     border: 1px solid black;
     border-radius: 5px;
-    box-shadow: 2px 2px;
+    box-shadow: 3px 3px gray;
     margin-bottom: 10px;
     padding: 1vw;
     cursor: pointer;
+}
+
+.top > * {
+    font-weight: bold;
+}
+
+.match img {
+    width: 30px;
+    height: 30px;
+}
+
+.match:hover {
+    background-color: #FFF5F5;
 }
 
 .match h4 {
@@ -22,9 +35,16 @@
     border-right: 1px solid black;
 }
 
-.bottom {
+.left > .bottom {
     display: flex;
     justify-content: space-around;
+    margin-top: 10px;
+}
+
+.right > .bottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .hidden {
@@ -36,7 +56,18 @@
     justify-content: center;
 }
 
-.match img {
-    width: 30px;
-    height: 30px;
+.referees {
+    display: flex;
 }
+
+
+
+.bottom .refereeTeam {
+    padding-right: 40px;
+}
+
+.referees > .fa-solid {
+    padding: 2px;
+    color: red;
+}
+

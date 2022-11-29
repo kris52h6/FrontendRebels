@@ -39,18 +39,32 @@ function displayMatches(matchesData) {
 }
 
 function displayMatch(m) {
+    const date = new Date(m.startTime);
+    const dateOptions = {
+        dateStyle: "long",
+    };
+    const dateFormatted = date.toLocaleDateString("da-DK", dateOptions);
     const matchTemplate = document.querySelector("template");
     const clone = matchTemplate.cloneNode(true).content;
     const matchContent = document.querySelector("#match-content");
     const match = document.createElement("div");
     match.classList.add("match");
 
-    clone.querySelector(".match-time").textContent = m.startTime;
+    clone.querySelector(".match-time").textContent = dateFormatted;
     clone.querySelector(".hometeam-h2").textContent = teamsKeyValue.get(m.homeTeamId);
     // clone.querySelector(".hometeam-img").src = "./images/logos/oakslogo.png";
     clone.querySelector(".awayteam-h2").textContent = teamsKeyValue.get(m.awayTeamId);
     // clone.querySelector(".awayteam-img").src = "./images/logos/oakslogo.png";
     match.id = "match-id" + m.id;
+
+    const amountOfAcceptedReferees = m.acceptedReferees;
+    console.log(amountOfAcceptedReferees);
+    const refereeNodes = clone.querySelectorAll(".referees");
+    if (amountOfAcceptedReferees != 0) {
+        for (let i = 0; i < amountOfAcceptedReferees.length; i++) {
+            refereeNodes[0].children[i].style.color = "Green";
+        }
+    }
 
     match.appendChild(clone);
     matchContent.append(match);
