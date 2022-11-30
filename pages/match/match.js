@@ -30,8 +30,10 @@ async function displaySignups(signups) {
     let listData = signups
         .map((s) =>
         `
+        <div class = "list-item">
         <li id="${s.id}">${s.refereeUsername}</li> 
-        <button class = "btn">A</button>
+        <button class = "btn">+</button>
+        </div>
         `)
         .join("\n");
     signupList.innerHTML = DOMPurify.sanitize(listData);
