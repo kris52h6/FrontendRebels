@@ -18,11 +18,16 @@ async function createReferee(){
         newReferee.bankInformation = document.querySelector("#input-user-bankinformation").value
         newReferee.license = document.querySelector("#input-user-license").value
 
-        console.log(newReferee);
         const options = {}
         options.method = "POST"
         options.headers = {"Content-type": "application/json"}
         options.body = JSON.stringify(newReferee)
-        const addUser = await fetch(refereeUrl, options).then(handleHttpErrors)
+        //if user is added to database, then redirect to login page
+        const addUser = await fetch(refereeUrl, options).then(data => {
+            console.log(data)
+            location.replace("/#/")
+        }).catch(err => {
+            alert(err)
+        })
     }
 }
