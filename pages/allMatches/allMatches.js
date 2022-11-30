@@ -52,13 +52,13 @@ function displayMatch(m) {
 
     clone.querySelector(".match-time").textContent = dateFormatted;
     clone.querySelector(".hometeam-h2").textContent = teamsKeyValue.get(m.homeTeamId);
-    // clone.querySelector(".hometeam-img").src = "./images/logos/oakslogo.png";
+    clone.querySelector(".hometeam-img").src = "./images/logos/" + m.homeTeamId + ".png";
     clone.querySelector(".awayteam-h2").textContent = teamsKeyValue.get(m.awayTeamId);
-    // clone.querySelector(".awayteam-img").src = "./images/logos/oakslogo.png";
+    clone.querySelector(".awayteam-img").src = "./images/logos/" + m.awayTeamId + ".png";
+
     match.id = "match-id" + m.id;
 
     const amountOfAcceptedReferees = m.acceptedReferees;
-    console.log(amountOfAcceptedReferees);
     const refereeNodes = clone.querySelectorAll(".referees");
     if (amountOfAcceptedReferees != 0) {
         for (let i = 0; i < amountOfAcceptedReferees.length; i++) {
