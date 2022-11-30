@@ -19,6 +19,7 @@ import {initMakeAdmin} from "./pages/makeAdmin/makeAdmin.js"
 import {initMyProfile} from "./pages/myProfile/myProfile.js"
 import {initLogout} from "./pages/logout/logout.js"
 import {initCreateClub} from "./pages/createClub/createClub.js"
+import {initClub} from "./pages/club/club.js";
 
 
 window.addEventListener("load", async () => {
@@ -38,6 +39,7 @@ window.addEventListener("load", async () => {
   const templateMyProfile = await loadHtml("./pages/myProfile/myProfile.html")
   const templateLogout = await loadHtml("./pages/logout/logout.html")
   const templateCreateClub = await loadHtml("./pages/createClub/createClub.html")
+  const templateClub = await loadHtml("./pages/club/club.html")
 
   adjustForMissingHash();
 
@@ -58,6 +60,10 @@ window.addEventListener("load", async () => {
       "/matches": () => {
         renderTemplate(templateMatches, "content");
         initAllMatches();
+      },
+      "/club": () => {
+        renderTemplate(templateClub, "content");
+        initClub();
       },
       "/match": () => {
         renderTemplate(templateMatch, "content")
