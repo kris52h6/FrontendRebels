@@ -39,21 +39,23 @@ async function displaySignups(signups) {
     signupList.innerHTML = DOMPurify.sanitize(listData);
 
     document.querySelector("#signup-list").addEventListener("mouseup", (e) => {
-        const refereeUsername = e.target.previousElementSibling.innerHTML
-        const signupId = e.target.previousElementSibling.id
-        addAccepted(refereeUsername, signupId)
-    })
+        const refereeUsername = e.target.previousElementSibling.innerHTML;
+        const signupId = e.target.previousElementSibling.id;
+        addAccepted(refereeUsername, signupId);
+    });
     document.querySelector("#signup-button").onclick = addSignUp;
-
 }
 
-function displayAccepted(match){
+function displayAccepted(match) {
     const acceptedList = document.querySelector("#accepted-list");
     acceptedList.innerHTML = "";
-    const listData = match.acceptedReferees.map((a) =>
-        `
+    const listData = match.acceptedReferees
+        .map(
+            (a) =>
+                `
         <li>${a}</li>
-        `)
+        `
+        )
         .join("\n");
     acceptedList.innerHTML = DOMPurify.sanitize(listData);
 }
@@ -87,13 +89,18 @@ async function addSignUp() {
     options.headers = { "Content-type": "application/json" };
     options.body = JSON.stringify(signUpObject);
 
-    const addSignUp = await fetch(addSignUpUrl, options).then(handleHttpErrors);
-
     const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
-    displaySignups(signups);
+    const refereeIsSignedUp = await checkIfRefereeIsSignedUp(signups);
+    const refereeIsAccepted = await checkIfRefereeIsAdded(user.username);
+
+    if (!refereeIsSignedUp && !refereeIsAccepted) {
+        const addSignUp = await fetch(addSignUpUrl, options).then(handleHttpErrors);
+        const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
+        displaySignups(signups);
+    }
 }
 
-async function addAccepted(refereeUsername, signupId){
+async function addAccepted(refereeUsername, signupId) {
     const acceptedObject = {};
     acceptedObject.matchId = matchId;
     acceptedObject.username = refereeUsername;
@@ -101,14 +108,19 @@ async function addAccepted(refereeUsername, signupId){
 
     const options = {};
     options.method = "PATCH";
-    options.headers = {"Content-type": "application/json"};
-    options.body = JSON.stringify(acceptedObject)
+    options.headers = { "Content-type": "application/json" };
+    options.body = JSON.stringify(acceptedObject);
 
-    const addAccepted = await fetch(matchesUrl, options).then(handleHttpErrors);
-    const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
-    const accepted = await fetch(matchesUrl + matchId).then(handleHttpErrors);
-    displaySignups(signups);
-    displayAccepted(accepted)
+    // const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
+    const refereeIsAccepted = await checkIfRefereeIsAdded(refereeUsername);
+
+    if (!refereeIsAccepted) {
+        const addAccepted = await fetch(matchesUrl, options).then(handleHttpErrors);
+        const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
+        const accepted = await fetch(matchesUrl + matchId).then(handleHttpErrors);
+        displaySignups(signups);
+        displayAccepted(accepted);
+    }
 }
 
 async function getUser() {
@@ -117,4 +129,22 @@ async function getUser() {
     options.method = "GET";
     options.headers = { Authorization: token };
     return await fetch(refereeUrl, options).then(handleHttpErrors);
+}
+
+async function checkIfRefereeIsSignedUp(signups) {
+    for (let i = 0; i < signups.length; i++) {
+        if (signups[i].refereeUsername === user.username) {
+            return true;
+        }
+    }
+    return false;
+}
+
+async function checkIfRefereeIsAdded(refereeUsername) {
+    const match = await fetch(matchesUrl + matchId).then(handleHttpErrors);
+    if (match.acceptedReferees.includes(refereeUsername)) {
+        return true;
+    } else {
+        return false;
+    }
 }
