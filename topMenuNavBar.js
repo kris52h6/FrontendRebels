@@ -10,7 +10,7 @@ async function checkLoginStatusAndCreateNavBar(){
 
     const accessOptions = ["admin","user","referee" ]
 
-    var success = false;
+    var alreadyRan = 0;
 
     for(let i = 0; i < accessOptions.length; i++){
         checkAccess(accessOptions[i]).then(result =>{
@@ -19,28 +19,22 @@ async function checkLoginStatusAndCreateNavBar(){
                     createAdminNavBar()
                 }
               console.log("Sucess")
-              createNavBar(true)
-              i = accessOptions.length;
-              success = true
-
-            
+                if (alreadyRan === 0) {
+                    createNavBar(true)
+                    i = accessOptions.length;
+                    alreadyRan = 1;
+                }
             }
-        else if(i === accessOptions.length-1 && !success){
+        else if(i === accessOptions.length-1 && alreadyRan === 0){
             createNavBar(false)
         }})
     }
 }
 
-/*
-                        <li class="nav-item">
-                            <a class="nav-link" href="/getReferees" data-navigo>Alle dommere</a>
-                        </li>
- */
+
 function createAdminNavBar(){
     const li = document.createElement("li")
     li.setAttribute("class", "nav-item nav-admin")
-
-
 
     const a = document.createElement("a")
     a.className = "nav-link"
@@ -49,7 +43,6 @@ function createAdminNavBar(){
     a.textContent = "Alle dommere"
 
     li.append(a)
-
     document.querySelector("#menu").append(li)
 }
 
@@ -62,23 +55,7 @@ async function getUserFromUrl(){
     return await fetch(userUrl, options).then(handleHttpErrors)
 }
 
-
-/*
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-  </ul>
-</div>
- */
-
-
 export function createNavBar(isLoggedIn){
-    console.log(isLoggedIn)
     if(isLoggedIn){
 
         const div = document.createElement("div")
@@ -94,8 +71,6 @@ export function createNavBar(isLoggedIn){
         getUserFromUrl().then(user => {
             button.textContent = user.username
         })
-
-
 
         div.append(button)
 
@@ -122,11 +97,6 @@ export function createNavBar(isLoggedIn){
         div.append(ul)
 
         document.querySelector("#top-menu-container").appendChild(div)
-
-       // a.setAttribute("href", "/#/myProfile")
-       // a.setAttribute("data-navigo", true)
-       // a.textContent = "Min profil"
-       // a.setAttribute("class", "nav-link")
     }
     else{
         if(document.querySelector("#dropdown-logged-in")){
@@ -142,7 +112,6 @@ export function createNavBar(isLoggedIn){
         a.setAttribute("class", "nav-link")
         document.querySelector("#top-menu-container").appendChild(a)
     }
-    
 }
 
 
