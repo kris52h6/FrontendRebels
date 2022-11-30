@@ -11,6 +11,7 @@ function getClub(){
         document.querySelector("#input-club-name").innerHTML = DOMPurify.sanitize(data.name)
         document.querySelector("#input-club-address").innerHTML = DOMPurify.sanitize(data.address)
         document.querySelector("#input-club-email").innerHTML = DOMPurify.sanitize(data.email)
+        document.querySelector("#club-name-header").innerHTML = DOMPurify.sanitize(data.name)
     }).catch(err => {
         console.log(err)
     });
