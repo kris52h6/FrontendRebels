@@ -17,13 +17,13 @@ async function createClub(){
 
         const token = "Bearer " + localStorage.getItem("token")
 
-        const myHeaders = new Headers();
-        myHeaders.append('Content-type', 'application/json');
-        myHeaders.append('Authorization', token);
+        const requestHeaders = new Headers();
+        requestHeaders.append('Content-type', 'application/json');
+        requestHeaders.append('Authorization', token);
         
         const options = {}
         options.method = "POST"
-        options.headers = myHeaders
+        options.headers = requestHeaders
         options.body = JSON.stringify(newClub)
         
         const addUser = await fetch(clubUrl, options).then(handleHttpErrors)
