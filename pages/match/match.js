@@ -28,13 +28,13 @@ async function displaySignups(signups) {
     const signupList = document.querySelector("#signup-list");
     signupList.innerHTML = "";
     let listData = signups
-        .map(
-            (s) =>
-                `
-        <li id="${s.id}">${s.refereeUsername}</li> 
-        <button class = "btn">A</button>
+        .map((s) =>
         `
-        )
+        <div class = "list-item">
+        <li id="${s.id}">${s.refereeUsername}</li> 
+        <button class = "btn">+</button>
+        </div>
+        `)
         .join("\n");
     signupList.innerHTML = DOMPurify.sanitize(listData);
 

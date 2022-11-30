@@ -1,0 +1,64 @@
+.match-wrapper{
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 3px 3px gray;
+    margin-bottom: 10px;
+    padding: 1vw;
+    cursor: pointer;
+}
+.match-date-time{
+    display: flex;
+    justify-content: center;
+}
+
+.match-teams{
+    display: flex;
+}
+
+.match-info {
+    display: flex;
+    justify-content: center;
+}
+
+.referee-lists{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.referee-lists > #signups, #accepted{
+    border: 1px solid;
+    border-radius: 5px;
+}
+.referee-lists h2{
+    text-align: center;
+}
+
+#signup-list, #accepted-list{
+    border-top: 1px solid;
+    list-style-type: none;
+
+}
+
+.match-teams > .left{
+    border-right: 0px;
+}
+
+.match-teams > .hometeam{
+    border: 1px solid;
+}
+
+.referee-lists > ul{
+    list-style-type: none;
+}
+
+.list-item{
+    display: flex;
+    align-items: center;
+}
+
+#signup-button{
+    border: 1px solid;
+}

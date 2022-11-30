@@ -32,7 +32,6 @@ async function getUserInfo(){
     options.headers = {"Authorization": token}
 
     const refereeInfo = await fetch(refereeUrl,options).then(handleHttpErrors)
-    console.log(refereeInfo)
     document.querySelector("#input-user-username").innerHTML = DOMPurify.sanitize(refereeInfo.username)
     document.querySelector("#input-user-email").innerHTML =DOMPurify.sanitize(refereeInfo.email)
     document.querySelector("#input-user-firstname").innerHTML = DOMPurify.sanitize(refereeInfo.firstname)

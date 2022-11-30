@@ -1,19 +1,43 @@
 <div class="template">
-    <h1>Match</h1>
-    <div id="hometeam"></div>
-    <div id="awayteam"></div>
-    <div id="starttime"></div>
-    <div id="address"></div>
-    <div id="referees">
-        <ul id="referee-list"></ul>
+
+    <h1>Kamp</h1>
+
+    <div class="match-wrapper">
+        <div class="match-date-time">
+            <h5 class="starttime" id="starttime"></h5>
+        </div>
+        <div class="match-teams">
+            <div class="col-5 left">
+                <div class="hometeam">
+                    <img class="hometeam-img" src="" />
+                    <h4 id="hometeam"></h4>
+                </div>
+            </div>
+            <div class="col-8 right">
+                <div class="awayteam">
+                    <img class="awayteam-img" src="" />
+                    <h4 id="awayteam"></h4>
+                </div>
+            </div>
+        </div>
+        <div class="match-info">
+            <div id="address">Dildhaven 40, 2730 Herlev</div>
+        </div>
     </div>
-    <div id="signups">
-        <h2>Tilmeldte dommere</h2>
-        <ul id="signup-list"></ul>
-        <button id="signup-button" class="btn">Tilmeld</button>
-    </div>
-    <div id="accepted">
-        <h2>Accepteret dommere</h2>
-        <ul id="accepted-list"></ul>
+
+    <div class="referee-lists"> 
+        <div id="signups" class="col-5">
+            <div>
+                
+            </div>
+                <h2>Tilmeldte dommere</h2>
+                <ul id="signup-list"></ul>
+                <button id="signup-button" class="btn">Tilmeld</button>        
+        </div>
+        <div id="accepted" class="col-5">
+                <h2>Accepteret dommere</h2>
+                <ul id="accepted-list"></ul>
+        </div>
     </div>
 </div>
+    
