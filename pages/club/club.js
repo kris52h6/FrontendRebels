@@ -7,18 +7,65 @@ export function initClub(){
 function getClub(){
     const clubName = clubURL + getClubFromUrl();
     fetch(clubName).then(handleHttpErrors).then(data => {
-        console.log(data)
         document.querySelector("#input-club-name").innerHTML = DOMPurify.sanitize(data.name)
         document.querySelector("#input-club-address").innerHTML = DOMPurify.sanitize(data.address)
         document.querySelector("#input-club-email").innerHTML = DOMPurify.sanitize(data.email)
-        document.querySelector("#club-name-header").innerHTML = DOMPurify.sanitize(data.name)
-    }).catch(err => {
-        console.log(err)
-    });
+        createTeams(data.teams)
+    })  ;
 }
 
 function getClubFromUrl(){
     const splitUrl = window.location.href.split("=")
     const clubName = splitUrl[1]
     return clubName;
+}
+
+
+
+
+function createTeams(teams){
+ 
+    if(document.querySelector(".teamsCreated") == null){
+    const size = teams.length
+    teams.map(team => createTeam(team,size))
+}
+}
+
+function createTeam(team, size ){
+
+    const row = document.createElement("div")
+    row.className = "row teamsCreated"
+    
+    const nameDiv = document.createElement("div")
+    nameDiv.className = "col-sm-3"
+
+    const teamName = document.createElement("p")
+    teamName.className = "mb-0"
+    teamName.innerText = "Hold navn"
+
+    const nameInputDiv = document.createElement("div")
+    nameInputDiv.className = "col-sm-9"
+
+    const nameInputP = document.createElement("p")
+    nameInputDiv.className = "col-sm-9"
+    nameInputDiv.id = "input-club-name"
+    nameInputDiv.innerText = team.name
+
+    
+
+    const hr = document.createElement("hr")
+
+    
+    nameDiv.appendChild(teamName)
+    nameInputDiv.appendChild(nameInputP)
+
+    row.appendChild(nameDiv)
+    row.appendChild(nameInputDiv)
+
+
+    if(team.id < size){
+    row.appendChild(hr)
+    }
+    document.querySelector("#teams").appendChild(row)
+
 }
