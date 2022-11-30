@@ -55,6 +55,8 @@ function displayMatch(m) {
     clone.querySelector(".hometeam-img").src = "./images/logos/" + m.homeTeamId + ".png";
     clone.querySelector(".awayteam-h2").textContent = teamsKeyValue.get(m.awayTeamId);
     clone.querySelector(".awayteam-img").src = "./images/logos/" + m.awayTeamId + ".png";
+    clone.querySelector(".refereeteam-img").src = "./images/logos/" + m.refereeTeamId + ".png";
+    clone.querySelector(".referee-team").textContent = teamsKeyValue.get(m.refereeTeamId);
 
     match.id = "match-id" + m.id;
 
