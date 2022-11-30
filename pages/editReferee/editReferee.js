@@ -30,8 +30,12 @@ async function editReferee(){
         options.headers = myHeaders
         options.body = JSON.stringify(refreeUpdates)
         console.log(options)
-        const addUser = await fetch(refereeUrl, options)
-        location.replace("/#/myProfile")
+        const addUser = await fetch(refereeUrl, options).then(handleHttpErrors).then(data => {
+            location.replace("/#/myProfile")
+        }).catch(err => {
+            const errorDiv = document.querySelector("#error")
+            errorDiv.innerHTML = err.message
+            errorDiv.removeAttribute("hidden")})
     }
 
     async function getUserInfo(){
