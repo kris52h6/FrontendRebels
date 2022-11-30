@@ -10,7 +10,7 @@ async function checkLoginStatusAndCreateNavBar(){
 
     const accessOptions = ["admin","user","referee" ]
 
-    var success = false;
+    var alreadyRan = 0;
 
     for(let i = 0; i < accessOptions.length; i++){
         checkAccess(accessOptions[i]).then(result =>{
@@ -19,11 +19,13 @@ async function checkLoginStatusAndCreateNavBar(){
                     createAdminNavBar()
                 }
               console.log("Sucess")
-              createNavBar(true)
-              i = accessOptions.length;
-              success = true
+                if (alreadyRan === 0) {
+                    createNavBar(true)
+                    i = accessOptions.length;
+                    alreadyRan = 1;
+                }
             }
-        else if(i === accessOptions.length-1 && !success){
+        else if(i === accessOptions.length-1 && alreadyRan === 0){
             createNavBar(false)
         }})
     }
