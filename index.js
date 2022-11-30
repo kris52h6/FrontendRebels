@@ -10,7 +10,6 @@ import {
 import { initAllMatches } from "./pages/allMatches/allMatches.js";
 import {initLogin} from "./pages/login/login.js";
 import {initCheckAccess} from "./pages/admintest/admintest.js";
-import {initCreateUser} from "./pages/createUser/createUser.js";
 import {initCreateReferee} from "./pages/createReferee/createReferee.js";
 import {initEditReferee} from "./pages/editReferee/editReferee.js"
 import {initEditRefereePassword} from "./pages/editRefereePassword/editRefereePassword.js"
@@ -18,6 +17,9 @@ import {initMatch} from "./pages/match/match.js"
 import {initGetReferees} from "./pages/getReferees/getReferees.js"
 import {initMakeAdmin} from "./pages/makeAdmin/makeAdmin.js"
 import {initMyProfile} from "./pages/myProfile/myProfile.js"
+import {initLogout} from "./pages/logout/logout.js"
+import {initCreateClub} from "./pages/createClub/createClub.js"
+
 
 window.addEventListener("load", async () => {
   const templateMatches = await loadHtml("./pages/allMatches/allMatches.html");
@@ -34,6 +36,8 @@ window.addEventListener("load", async () => {
   const templateGetReferees = await loadHtml("./pages/getReferees/getReferees.html")
   const templateMakeAdmin = await loadHtml("./pages/makeAdmin/makeAdmin.html")
   const templateMyProfile = await loadHtml("./pages/myProfile/myProfile.html")
+  const templateLogout = await loadHtml("./pages/logout/logout.html")
+  const templateCreateClub = await loadHtml("./pages/createClub/createClub.html")
 
   adjustForMissingHash();
 
@@ -76,16 +80,26 @@ window.addEventListener("load", async () => {
         initEditRefereePassword();
       },
       "/getReferees" : () =>{
-        renderTemplate(templateGetReferees, "content")
-        initGetReferees();
+        const hasAccess = checkAccess("admin").then(result => {
+            if(result){
+                renderTemplate(templateGetReferees, "content")
+                initGetReferees();
+            }else {
+                router.navigate("/#/")
+            }
+        })
       },
         "/makeAdmin" : () => {
         renderTemplate(templateMakeAdmin, "content")
         initMakeAdmin();
       },
+      "/createClub" : () => {
+        renderTemplate(templateCreateClub, "content")
+        initCreateClub();
+      },
+
       "/admintest": () => {
         const hasAccess = checkAccess("admin").then(result =>{
-
           if(result){
             console.log("Sucess")
             renderTemplate(templateAdmintest,"content");
@@ -95,6 +109,10 @@ window.addEventListener("load", async () => {
             console.log("Failed")
             renderTemplate(templateHome, "content");
           } } )
+      },
+      "/logout": () => {
+        renderTemplate(templateLogout, "content");
+        initLogout();
       },
       "/dommertest": () => {
         const hasAccess = checkAccess("dommer").then(result =>{
