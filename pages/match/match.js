@@ -20,6 +20,7 @@ async function setup() {
     createKeyValuePairs(teams);
     displayMatch(match);
     displaySignups(signups);
+    displayAccepted(match);
     user = await getUser();
 }
 
@@ -27,19 +28,32 @@ async function displaySignups(signups) {
     const signupList = document.querySelector("#signup-list");
     signupList.innerHTML = "";
     let listData = signups
-        .map(
-            (s) =>
-                `
-        <li>${s.refereeUsername}</li>
+        .map((s) =>
         `
-        )
+        <li id="${s.id}">${s.refereeUsername}</li> 
+        <button class = "btn">A</button>
+        `)
         .join("\n");
     signupList.innerHTML = DOMPurify.sanitize(listData);
 
+    document.querySelector("#signup-list").addEventListener("mouseup", (e) => {
+        const refereeUsername = e.target.previousElementSibling.innerHTML
+        const signupId = e.target.previousElementSibling.id
+        addAccepted(refereeUsername, signupId)
+    })
     document.querySelector("#signup-button").onclick = addSignUp;
-    // document.querySelector("#signup-button").addEventListener("mouseup", () => {
-    //     addSignUp();
-    // });
+
+}
+
+function displayAccepted(match){
+    const acceptedList = document.querySelector("#accepted-list");
+    acceptedList.innerHTML = "";
+    const listData = match.acceptedReferees.map((a) =>
+        `
+        <li>${a}</li>
+        `)
+        .join("\n");
+    acceptedList.innerHTML = DOMPurify.sanitize(listData);
 }
 
 function getMatchIdFromUrl() {
@@ -49,7 +63,6 @@ function getMatchIdFromUrl() {
 }
 
 function displayMatch(matchData) {
-    console.log(matchData);
     document.querySelector("#hometeam").innerHTML = DOMPurify.sanitize(teamsKeyValue.get(matchData.homeTeamId));
     document.querySelector("#awayteam").innerHTML = DOMPurify.sanitize(teamsKeyValue.get(matchData.awayTeamId));
     document.querySelector("#starttime").innerHTML = matchData.startTime;
@@ -78,11 +91,28 @@ async function addSignUp() {
     displaySignups(signups);
 }
 
+async function addAccepted(refereeUsername, signupId){
+    const acceptedObject = {};
+    acceptedObject.matchId = matchId;
+    acceptedObject.username = refereeUsername;
+    acceptedObject.signupId = signupId;
+
+    const options = {};
+    options.method = "PATCH";
+    options.headers = {"Content-type": "application/json"};
+    options.body = JSON.stringify(acceptedObject)
+
+    const addAccepted = await fetch(matchesUrl, options).then(handleHttpErrors);
+    const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
+    const accepted = await fetch(matchesUrl + matchId).then(handleHttpErrors);
+    displaySignups(signups);
+    displayAccepted(accepted)
+}
+
 async function getUser() {
     const token = "Bearer " + localStorage.getItem("token");
     const options = {};
     options.method = "GET";
     options.headers = { Authorization: token };
-
     return await fetch(refereeUrl, options).then(handleHttpErrors);
 }
