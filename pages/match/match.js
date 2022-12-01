@@ -7,6 +7,7 @@ const refereeUrl = "http://localhost:8080/api/users/referee";
 let teamsKeyValue = new Map();
 let user;
 let matchId;
+let globalMatch;
 
 export function initMatch() {
     setup();
@@ -15,6 +16,7 @@ export function initMatch() {
 async function setup() {
     matchId = getMatchIdFromUrl();
     const match = await fetch(matchesUrl + matchId).then(handleHttpErrors);
+    globalMatch = match;
     const teams = await fetch(teamsUrl).then(handleHttpErrors);
     const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
     createKeyValuePairs(teams);
@@ -26,19 +28,25 @@ async function setup() {
 
 async function displaySignups(signups) {
     const signupList = document.querySelector("#signup-list");
-    signupList.innerHTML = "";
+    const signupListClone = signupList.cloneNode(true);
+    signupList.parentNode.replaceChild(signupListClone, signupList);
+    document.querySelector(".error").textContent = "";
+
+    signupListClone.innerHTML = "";
     let listData = signups
-        .map((s) =>
-        `
+        .map(
+            (s) =>
+                `
         <div class = "list-item">
         <li id="${s.id}">${s.refereeUsername}</li> 
         <button class = "btn">+</button>
         </div>
-        `)
+        `
+        )
         .join("\n");
-    signupList.innerHTML = DOMPurify.sanitize(listData);
+    signupListClone.innerHTML = DOMPurify.sanitize(listData);
 
-    document.querySelector("#signup-list").addEventListener("mouseup", (e) => {
+    signupListClone.addEventListener("mouseup", (e) => {
         const refereeUsername = e.target.previousElementSibling.innerHTML;
         const signupId = e.target.previousElementSibling.id;
         addAccepted(refereeUsername, signupId);
@@ -103,6 +111,8 @@ async function addSignUp() {
         const addSignUp = await fetch(addSignUpUrl, options).then(handleHttpErrors);
         const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
         displaySignups(signups);
+    } else {
+        document.querySelector(".error").textContent = "Dommer allerede tilmeldt";
     }
 }
 
@@ -117,15 +127,21 @@ async function addAccepted(refereeUsername, signupId) {
     options.headers = { "Content-type": "application/json" };
     options.body = JSON.stringify(acceptedObject);
 
-    // const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
     const refereeIsAccepted = await checkIfRefereeIsAdded(refereeUsername);
+    const refereeTeam = await fetch(teamsUrl + "/" + globalMatch.refereeTeamId).then(handleHttpErrors);
 
-    if (!refereeIsAccepted) {
-        const addAccepted = await fetch(matchesUrl, options).then(handleHttpErrors);
-        const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
-        const accepted = await fetch(matchesUrl + matchId).then(handleHttpErrors);
-        displaySignups(signups);
-        displayAccepted(accepted);
+    if (user.clubName == refereeTeam.club) {
+        if (!refereeIsAccepted) {
+            const addAccepted = await fetch(matchesUrl, options).then(handleHttpErrors);
+            const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
+            const accepted = await fetch(matchesUrl + matchId).then(handleHttpErrors);
+            displaySignups(signups);
+            displayAccepted(accepted);
+        } else {
+            document.querySelector(".error").textContent = "Dommeren er allerede accepteret.";
+        }
+    } else {
+        document.querySelector(".error").textContent = "Du er ikke dommeransvarlig for denne klub.";
     }
 }
 

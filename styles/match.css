@@ -63,6 +63,10 @@
     border: 1px solid;
 }
 
+.error {
+    color: red;
+}
+
 .match-teams img {
     width: 30px;
     height: 30px;
