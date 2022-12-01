@@ -12,6 +12,23 @@ async function setup() {
     const teams = await getAllTeams();
     displayMatches(matches, teams);
     makeTableRowsLinks(matches);
+    setupButtons();
+}
+
+async function setupButtons() {
+    const buttons = document.querySelector(".btns");
+    buttons.addEventListener("mouseup", (e) => {
+        const divisionId = e.target.id;
+        fetchByDivision(divisionId);
+    });
+}
+
+async function fetchByDivision(divisionId) {
+    const matchesByDivision = await fetch(matchesUrl + "/division/" + divisionId).then(handleHttpErrors);
+    displayMatches(matchesByDivision);
+    makeTableRowsLinks(matchesByDivision);
+
+    console.log(matchesByDivision);
 }
 
 async function getAllMatches() {
