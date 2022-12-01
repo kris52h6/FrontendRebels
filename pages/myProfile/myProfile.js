@@ -1,4 +1,5 @@
 const refereeUrl = "http://localhost:8080/api/users/referee";
+const clubUrl = "http://localhost:8080/api/clubs/user/"
 import { handleHttpErrors } from "../../utils.js";
 export function initMyProfile() {
     myProfileButtons()
@@ -20,10 +21,6 @@ function goToEditPassword(){
     location.replace("/#/editRefereePassword")
 }
 
-
-
-
-
 async function getUserInfo(){
     const token = "Bearer " + localStorage.getItem("token")
 
@@ -39,4 +36,18 @@ async function getUserInfo(){
     document.querySelector("#input-user-bankinformation").innerHTML = DOMPurify.sanitize(refereeInfo.bankInformation)
     document.querySelector("#input-user-license").innerHTML = DOMPurify.sanitize(refereeInfo.license)
     
+    getClubInfo(refereeInfo.username)
+}
+
+
+async function getClubInfo(username){
+    const getClubUrl = clubUrl + username 
+    
+    const options = {}
+    options.method = "GET"
+
+    const clubInfo = await fetch(getClubUrl,options).then(handleHttpErrors)
+    document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubInfo.name)
+
+
 }
