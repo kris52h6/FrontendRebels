@@ -7,9 +7,13 @@ export function initClub(){
 function getClub(){
     const clubName = clubURL + getClubFromUrl();
     fetch(clubName).then(handleHttpErrors).then(data => {
+        console.log(data)
         document.querySelector("#input-club-name").innerHTML = DOMPurify.sanitize(data.name)
         document.querySelector("#input-club-address").innerHTML = DOMPurify.sanitize(data.address)
         document.querySelector("#input-club-email").innerHTML = DOMPurify.sanitize(data.email)
+        document.querySelector("#club-name-header").innerHTML = DOMPurify.sanitize(data.name)
+        const teamHeader = DOMPurify.sanitize(data.name) + "s hold"
+        document.querySelector("#team-name-header").innerHTML = teamHeader
         createTeams(data.teams)
     })  ;
 }
