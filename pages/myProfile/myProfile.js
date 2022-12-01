@@ -1,5 +1,8 @@
 const refereeUrl = "http://localhost:8080/api/users/referee";
 const clubUrl = "http://localhost:8080/api/clubs/user/"
+const clubUrlLink = "/#/clubs/"
+
+
 import { handleHttpErrors } from "../../utils.js";
 export function initMyProfile() {
     myProfileButtons()
@@ -47,7 +50,14 @@ async function getClubInfo(username){
     options.method = "GET"
 
     const clubInfo = await fetch(getClubUrl,options).then(handleHttpErrors)
+    let clubLink;
+    const clubLinkVar = clubUrlLink + clubInfo.name;
     document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubInfo.name)
 
+    const clubCol = document.querySelector("#club-col")
+    clubCol.style.cursor = "pointer"
+    clubCol.onclick = function() {
+        location.replace(clubLinkVar)
+    }
 
 }
