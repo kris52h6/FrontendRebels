@@ -13,7 +13,17 @@ async function editReferee(){
     async function changeRefereePassword(){
         const refreeUpdates = {}
         refreeUpdates.password = document.querySelector("#input-user-password").value
+        refreeUpdates.passwordVerify = document.querySelector("#input-user-password-verify").value
         const token = "Bearer " + localStorage.getItem("token")
+
+        var passwordCheckVar = passwordCheck(refreeUpdates.password ,refreeUpdates.passwordVerify)
+
+        if( !passwordCheckVar ){
+            const errorDiv = document.querySelector("#error")
+            errorDiv.innerHTML = "Password matcher ikke"
+            errorDiv.removeAttribute("hidden")}
+        
+         else{
 
         const options = {}
 
@@ -27,7 +37,10 @@ async function editReferee(){
         options.body = JSON.stringify(refreeUpdates)
         const addUser = await fetch(refreeUrlChangePassword, options)
         location.replace("/#/myProfile")
-    }
+        }
+        }
+
+
 
     async function getUserInfo(){
         const token = "Bearer " + localStorage.getItem("token")
@@ -41,4 +54,15 @@ async function editReferee(){
         console.log(refereeInfo)
         document.querySelector("#input-user-username").value = (refereeInfo.username)
     }
+    
+    function passwordCheck(password, passwordCheck){
+        if(password == passwordCheck && !password== "" ){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    
 }
+

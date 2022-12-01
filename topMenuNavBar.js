@@ -106,7 +106,7 @@ export function createNavBar(isLoggedIn){
             document.querySelector(".nav-admin").remove()
         }
         const a = document.createElement("a")
-        a.setAttribute("href", "/login")
+        a.setAttribute("href", "/#/login")
         a.setAttribute("data-navigo", true)
         a.textContent = "Login"
         a.setAttribute("class", "nav-link")

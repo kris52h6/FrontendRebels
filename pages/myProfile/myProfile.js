@@ -1,4 +1,8 @@
 const refereeUrl = "http://localhost:8080/api/users/referee";
+const clubUrl = "http://localhost:8080/api/clubs/user/"
+const clubUrlLink = "/#/club?clubName="
+
+
 import { handleHttpErrors } from "../../utils.js";
 export function initMyProfile() {
     myProfileButtons()
@@ -20,10 +24,6 @@ function goToEditPassword(){
     location.replace("/#/editRefereePassword")
 }
 
-
-
-
-
 async function getUserInfo(){
     const token = "Bearer " + localStorage.getItem("token")
 
@@ -39,4 +39,25 @@ async function getUserInfo(){
     document.querySelector("#input-user-bankinformation").innerHTML = DOMPurify.sanitize(refereeInfo.bankInformation)
     document.querySelector("#input-user-license").innerHTML = DOMPurify.sanitize(refereeInfo.license)
     
+    getClubInfo(refereeInfo.username)
+}
+
+
+async function getClubInfo(username){
+    const getClubUrl = clubUrl + username 
+    
+    const options = {}
+    options.method = "GET"
+
+    const clubInfo = await fetch(getClubUrl,options).then(handleHttpErrors)
+    let clubLink;
+    const clubLinkVar = clubUrlLink + clubInfo.name;
+    document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubInfo.name)
+
+    const clubCol = document.querySelector("#club-col")
+    clubCol.style.cursor = "pointer"
+    clubCol.onclick = function() {
+        location.replace(clubLinkVar)
+    }
+
 }
