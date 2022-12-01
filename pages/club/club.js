@@ -130,9 +130,8 @@ async function createReferee(refereeName, size, count ){
     row.appendChild(nameDiv)
     row.appendChild(nameInputDiv)
 
-    if(count < size-1){
+    if(count < size){
         row.appendChild(hr)
     }
     document.querySelector("#referees").appendChild(row)
-
 }
