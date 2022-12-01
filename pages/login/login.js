@@ -22,7 +22,7 @@ async function login() {
 
         const login = await fetch(loginUrl, options).then(handleHttpErrors).then(data => {
                 localStorage.setItem("token", data.token)
-                location.replace("/")
+                location.replace("/#/login")
             }).catch(err => {
                 const errorDiv = document.querySelector("#error")
                 errorDiv.innerHTML = err.message
