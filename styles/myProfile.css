@@ -9,4 +9,10 @@
 #club-name {
     text-align: center;
     width: 100%;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+#club-wrapper:hover {
+    background-color: #FFF5F5;
 }
