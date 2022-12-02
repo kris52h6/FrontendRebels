@@ -2,33 +2,30 @@ import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
 const matchesUrl = "http://localhost:8080/api/matches";
 const teamsUrl = "http://localhost:8080/api/teams";
 let teamsKeyValue = new Map();
+let matches;
 
 export function initAllMatches() {
     setup();
 }
 
 async function setup() {
-    const matches = await getAllMatches();
+    matches = await getAllMatches();
     const teams = await getAllTeams();
     displayMatches(matches, teams);
-    makeTableRowsLinks(matches);
-    setupButtons();
+    filterButtons();
 }
 
-async function setupButtons() {
+function filterButtons() {
     const buttons = document.querySelector(".btns");
     buttons.addEventListener("mouseup", (e) => {
         const divisionId = e.target.id;
-        fetchByDivision(divisionId);
+        filterMatches(divisionId);
     });
 }
 
-async function fetchByDivision(divisionId) {
-    const matchesByDivision = await fetch(matchesUrl + "/division/" + divisionId).then(handleHttpErrors);
-    displayMatches(matchesByDivision);
-    makeTableRowsLinks(matchesByDivision);
-
-    console.log(matchesByDivision);
+function filterMatches(divisionId) {
+    const filteredMatches = matches.filter((m) => m.divisionName == divisionId);
+    displayMatches(filteredMatches);
 }
 
 async function getAllMatches() {
@@ -53,6 +50,21 @@ function displayMatches(matchesData) {
     matchesData.forEach((m) => {
         displayMatch(m);
     });
+
+    const nodes = document.querySelectorAll(".match");
+    for (let i = 0; i < nodes.length; i++) {
+        nodes[i].addEventListener("mouseup", (e) => {
+            const matchId = nodes[i].id;
+            matchButtons(matchId);
+        });
+    }
+}
+
+function matchButtons(matchId) {
+    const matchSplit = matchId.split("id");
+    matchId = matchSplit[1];
+    const link = "#/match?matchId=" + matchId;
+    location.href = link;
 }
 
 function displayMatch(m) {
@@ -87,32 +99,4 @@ function displayMatch(m) {
 
     match.appendChild(clone);
     matchContent.append(match);
-}
-
-// function displayMatches(matchesData) {
-//     console.log(matchesData);
-//     let tableData = matchesData.map(
-//         (m) =>
-//             `
-//         <tr id = match-id${m.id}>
-//             <td>${teamsKeyValue.get(m.homeTeamId)}</td>
-//             <td>${teamsKeyValue.get(m.awayTeamId)}</td>
-//             <td>"${m.divisionName}"</td>
-//             <td>${m.startTime}</td>
-//         </tr>
-//         `
-//     );
-//     const tableString = tableData.join("\n");
-//     document.querySelector("#tbody").innerHTML = sanitizeStringWithTableRows(tableString);
-// }
-
-function makeTableRowsLinks(matches) {
-    const link = "#/match?matchId=";
-    const matchAmount = matches.length;
-    for (let i = 0; i < matchAmount; i++) {
-        document.getElementById("match-id" + matches[i].id).onclick = (event) => {
-            var j = i + 1;
-            location.href = link + j;
-        };
-    }
 }
