@@ -1,5 +1,7 @@
 const clubURL = "http://localhost:8080/api/clubs/"
 const refereeURL = "http://localhost:8080/api/users/referee/"
+const teamURL =  "http://localhost:8080/api/teams/"
+const teamLink = "/#/team?teamId="
 import {handleHttpErrors} from "../../utils.js";
 export function initClub(){
     window.addEventListener("load", getClub())
@@ -40,10 +42,21 @@ function createTeams(teams){
     }
 }
 
-function createTeam(team, size, count ){
+async function createTeam(team, size, count ){
+
+    var constTeamURL = teamURL + team
+    const teamInfo = await fetch(constTeamURL).then(handleHttpErrors)
+    
+    var getTeamLink = teamLink + team
 
     const row = document.createElement("div")
     row.className = "row teamsCreated"
+    
+    row.style.cursor = "pointer"
+    row.onclick = function() {
+        location.replace(getTeamLink)
+        }
+    
     
     const nameDiv = document.createElement("div")
     nameDiv.className = "col-sm-3"
@@ -58,7 +71,7 @@ function createTeam(team, size, count ){
     const nameInputP = document.createElement("p")
     nameInputDiv.className = "col-sm-9"
     nameInputDiv.id = "input-club-name"
-    nameInputDiv.innerText = team
+    nameInputDiv.innerText = teamInfo.name
 
     const hr = document.createElement("hr")
 
@@ -72,6 +85,18 @@ function createTeam(team, size, count ){
     row.appendChild(hr)
     }
     document.querySelector("#teams").appendChild(row)
+
+/*
+
+    const clubCol = document.querySelector("#club-col")
+    clubCol.style.cursor = "pointer"
+    clubCol.onclick = function() {
+        location.replace(clubLinkVar)
+        }
+        document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubInfo)
+
+        */
+
 
 }
 
