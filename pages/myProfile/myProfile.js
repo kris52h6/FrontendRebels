@@ -13,7 +13,6 @@ function myProfileButtons(){
     getUserInfo()
     document.querySelector("#profile-change-information").onclick = goToEditProfile
     document.querySelector("#profile-change-password").onclick = goToEditPassword
-
 }
 
 function goToEditProfile(){
@@ -32,7 +31,6 @@ async function getUserInfo(){
     options.headers = {"Authorization": token}
 
     const refereeInfo = await fetch(refereeUrl,options).then(handleHttpErrors)
-    console.log(refereeInfo)
     document.querySelector("#input-user-username").innerHTML = DOMPurify.sanitize(refereeInfo.username)
     document.querySelector("#input-user-email").innerHTML =DOMPurify.sanitize(refereeInfo.email)
     document.querySelector("#input-user-firstname").innerHTML = DOMPurify.sanitize(refereeInfo.firstname)
@@ -50,7 +48,5 @@ async function getUserInfo(){
         location.replace(clubLinkVar)
         }
         document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubInfo)
-
-
 }
 

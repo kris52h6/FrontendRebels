@@ -9,7 +9,6 @@ import {
 
 import { initAllMatches } from "./pages/allMatches/allMatches.js";
 import {initLogin} from "./pages/login/login.js";
-import {initCheckAccess} from "./pages/admintest/admintest.js";
 import {initCreateReferee} from "./pages/createReferee/createReferee.js";
 import {initEditReferee} from "./pages/editReferee/editReferee.js"
 import {initEditRefereePassword} from "./pages/editRefereePassword/editRefereePassword.js"
@@ -29,9 +28,6 @@ window.addEventListener("load", async () => {
   const templateHome = await loadHtml("./pages/home/home.html");
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html");
   const templateLogin = await loadHtml("./pages/login/login.html");
-  const templateAdmintest = await loadHtml("./pages/admintest/admintest.html");
-  const templateDommertest = await loadHtml("./pages/dommertest/dommertest.html")
-  const templateCreateUser = await loadHtml("./pages/createUser/createUser.html")
   const templateCreateReferee = await loadHtml("./pages/createReferee/createReferee.html")
   const templateEditReferee = await loadHtml("./pages/editReferee/editReferee.html")
   const templateEditRefereePassword = await loadHtml("./pages/editRefereePassword/editRefereePassword.html")
@@ -92,7 +88,7 @@ window.addEventListener("load", async () => {
         initEditRefereePassword();
       },
       "/getReferees" : () =>{
-        const hasAccess = checkAccess("admin").then(result => {
+        checkAccess("admin").then(result => {
             if(result){
                 renderTemplate(templateGetReferees, "content")
                 initGetReferees();
@@ -109,39 +105,14 @@ window.addEventListener("load", async () => {
         renderTemplate(templateCreateClub, "content")
         initCreateClub();
       },
-
-      "/admintest": () => {
-        const hasAccess = checkAccess("admin").then(result =>{
-          if(result){
-            console.log("Sucess")
-            renderTemplate(templateAdmintest,"content");
-            initCheckAccess();
-          }
-          else{
-            console.log("Failed")
-            renderTemplate(templateHome, "content");
-          } } )
-      },
       "/logout": () => {
         renderTemplate(templateLogout, "content");
         initLogout();
       },
-      "/dommertest": () => {
-        const hasAccess = checkAccess("dommer").then(result =>{
-          if(result){
-            console.log("Sucess")
-            renderTemplate(templateDommertest,"content");
-            initCheckAccess();
-          }
-          else{
-            console.log("Failed")
-            renderTemplate(templateHome, "content");
-          } } )
-      }, "/myProfile": () => {
+      "/myProfile": () => {
         renderTemplate(templateMyProfile, "content");
         initMyProfile();
       }
-
     })
     .notFound(() => {
       renderTemplate(templateNotFound, "content");
