@@ -32,32 +32,25 @@ async function getUserInfo(){
     options.headers = {"Authorization": token}
 
     const refereeInfo = await fetch(refereeUrl,options).then(handleHttpErrors)
+    console.log(refereeInfo)
     document.querySelector("#input-user-username").innerHTML = DOMPurify.sanitize(refereeInfo.username)
     document.querySelector("#input-user-email").innerHTML =DOMPurify.sanitize(refereeInfo.email)
     document.querySelector("#input-user-firstname").innerHTML = DOMPurify.sanitize(refereeInfo.firstname)
     document.querySelector("#input-user-lastname").innerHTML = DOMPurify.sanitize(refereeInfo.lastname)
     document.querySelector("#input-user-bankinformation").innerHTML = DOMPurify.sanitize(refereeInfo.bankInformation)
     document.querySelector("#input-user-license").innerHTML = DOMPurify.sanitize(refereeInfo.license)
-    
-    getClubInfo(refereeInfo.username)
-}
+    const clubInfo = refereeInfo.clubName
 
-
-async function getClubInfo(username){
-    const getClubUrl = clubUrl + username 
-    
-    const options = {}
-    options.method = "GET"
-
-    const clubInfo = await fetch(getClubUrl,options).then(handleHttpErrors)
     let clubLink;
-    const clubLinkVar = clubUrlLink + clubInfo.name;
-    document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubInfo.name)
-
+    const clubLinkVar = clubUrlLink + clubInfo;
+    console.log (clubLinkVar)
     const clubCol = document.querySelector("#club-col")
     clubCol.style.cursor = "pointer"
     clubCol.onclick = function() {
         location.replace(clubLinkVar)
-    }
+        }
+        document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubInfo)
+
 
 }
+
