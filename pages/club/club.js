@@ -130,8 +130,10 @@ async function createReferee(refereeName, size, count ){
     row.appendChild(nameDiv)
     row.appendChild(nameInputDiv)
 
-    if(count < size){
-        row.appendChild(hr)
+    //only add hr if not last element in list of referees
+    if(count < size-1){
+    row.appendChild(hr)
     }
+
     document.querySelector("#referees").appendChild(row)
 }
