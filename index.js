@@ -74,8 +74,8 @@ window.addEventListener("load", async () => {
         initTeam();
       },
       "/myMatches": () => {
-                renderTemplate(templateMyMatches, "content")
-                initMyMatches();
+      renderTemplate(templateMyMatches, "content")
+      initMyMatches();
 
       },
       "/login": () => {
