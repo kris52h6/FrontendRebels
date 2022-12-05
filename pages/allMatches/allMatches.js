@@ -1,4 +1,4 @@
-import { matchesUrl, teamsUrl } from "../../settings.js";
+import { matchesUrl, teamsUrl, clubUrl } from "../../settings.js";
 import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
 let teamsKeyValue = new Map();
 let matches;
@@ -11,6 +11,7 @@ async function setup() {
     matches = await getAllMatches();
     const teams = await getAllTeams();
     displayMatches(matches, teams);
+    const clubs = await fetch(clubUrl).then(handleHttpErrors);
     filterButtons();
 }
 
@@ -37,7 +38,6 @@ async function getAllTeams() {
     createKeyValuePairs(teams);
     return teams;
 }
-
 function createKeyValuePairs(teams) {
     for (let i = 0; i < teams.length; i++) {
         teamsKeyValue.set(teams[i].id, teams[i].name);
@@ -80,10 +80,10 @@ function displayMatch(m) {
 
     clone.querySelector(".match-time").textContent = dateFormatted;
     clone.querySelector(".hometeam-h2").textContent = teamsKeyValue.get(m.homeTeamId);
-    clone.querySelector(".hometeam-img").src = "./images/logos/" + m.homeTeamId + ".png";
+    clone.querySelector(".hometeam-img").src = "./images/logos/" + m.homeTeamImg + ".png";
     clone.querySelector(".awayteam-h2").textContent = teamsKeyValue.get(m.awayTeamId);
-    clone.querySelector(".awayteam-img").src = "./images/logos/" + m.awayTeamId + ".png";
-    clone.querySelector(".refereeteam-img").src = "./images/logos/" + m.refereeTeamId + ".png";
+    clone.querySelector(".awayteam-img").src = "./images/logos/" + m.awayTeamImg + ".png";
+    clone.querySelector(".refereeteam-img").src = "./images/logos/" + m.refereeTeamImg + ".png";
     clone.querySelector(".referee-team").textContent = teamsKeyValue.get(m.refereeTeamId);
 
     match.id = "match-id" + m.id;

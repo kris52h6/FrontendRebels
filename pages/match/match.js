@@ -1,5 +1,5 @@
 import { handleHttpErrors } from "../../utils.js";
-import {matchesUrl, teamsUrl, refereeUrl, signupsUrl, addSignUpUrl} from "../../settings.js";
+import { matchesUrl, teamsUrl, refereeUrl, signupsUrl, addSignUpUrl } from "../../settings.js";
 
 let teamsKeyValue = new Map();
 let user;
@@ -74,10 +74,10 @@ function getMatchIdFromUrl() {
 function displayMatch(matchData) {
     document.querySelector("#hometeam").innerHTML = DOMPurify.sanitize(teamsKeyValue.get(matchData.homeTeamId));
     document.querySelector("#awayteam").innerHTML = DOMPurify.sanitize(teamsKeyValue.get(matchData.awayTeamId));
-    document.querySelector(".hometeam-img").src = "./images/logos/" + matchData.homeTeamId + ".png";
-    document.querySelector(".awayteam-img").src = "./images/logos/" + matchData.awayTeamId + ".png";
-    
-    const matchDateTime = matchData.startTime.split("T")
+    document.querySelector(".hometeam-img").src = "./images/logos/" + matchData.homeTeamImg + ".png";
+    document.querySelector(".awayteam-img").src = "./images/logos/" + matchData.awayTeamImg + ".png";
+
+    const matchDateTime = matchData.startTime.split("T");
     document.querySelector("#starttime").innerHTML = matchDateTime[1];
     document.querySelector("#match-date").innerHTML = matchDateTime[0];
     document.querySelector("#number-of-accepted-referees").innerText = matchData.acceptedReferees.length + " / 5";
@@ -90,6 +90,10 @@ function createKeyValuePairs(teams) {
 }
 
 async function addSignUp() {
+    if (user == undefined) {
+        displayError("Du er ikke logget ind");
+        return;
+    }
     const signUpObject = {};
     signUpObject.matchId = matchId;
     signUpObject.refereeUsername = user.username;
@@ -109,7 +113,7 @@ async function addSignUp() {
         const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
         displaySignups(signups);
     } else {
-        document.querySelector(".error").textContent = "Dommer allerede tilmeldt";
+        displayError("Dommer allerede tilmeldt");
     }
 }
 
@@ -135,10 +139,10 @@ async function addAccepted(refereeUsername, signupId) {
             displaySignups(signups);
             displayAccepted(accepted);
         } else {
-            document.querySelector(".error").textContent = "Dommeren er allerede accepteret.";
+            displayError("Dommeren er allerede accepteret.");
         }
     } else {
-        document.querySelector(".error").textContent = "Du er ikke dommeransvarlig for denne klub.";
+        displayError("Du er ikke dommeransvarlig for denne klub.");
     }
 }
 
@@ -166,4 +170,8 @@ async function checkIfRefereeIsAdded(refereeUsername) {
     } else {
         return false;
     }
+}
+
+function displayError(msg) {
+    document.querySelector(".error").textContent = msg;
 }
