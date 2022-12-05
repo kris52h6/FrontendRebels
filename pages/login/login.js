@@ -1,5 +1,5 @@
-const loginUrl = "http://localhost:8080/api/auth/login";
 import { handleHttpErrors } from "../../utils.js";
+import {loginUrl} from "../../settings.js";
 
 export function initLogin(){
     window.addEventListener("load",login())

@@ -1,6 +1,5 @@
-const clubURL = "http://localhost:8080/api/clubs/"
-const refereeURL = "http://localhost:8080/api/users/referee/"
-const teamURL =  "http://localhost:8080/api/teams/"
+import { clubUrl, refereeUrl, teamsUrl } from "../../settings.js"
+
 const teamLink = "/#/team?teamId="
 import {handleHttpErrors} from "../../utils.js";
 export function initClub(){
@@ -8,7 +7,7 @@ export function initClub(){
 }
 
 function getClub(){
-    const clubName = clubURL + getClubFromUrl();
+    const clubName = clubUrl + getClubFromUrl();
     fetch(clubName).then(handleHttpErrors).then(data => {
         console.log(data)
         document.querySelector("#input-club-name").innerHTML = DOMPurify.sanitize(data.name)
@@ -44,7 +43,7 @@ function createTeams(teams){
 
 async function createTeam(team, size, count ){
 
-    var constTeamURL = teamURL + team
+    var constTeamURL = teamsUrl + team
     const teamInfo = await fetch(constTeamURL).then(handleHttpErrors)
     
     var getTeamLink = teamLink + team
@@ -86,16 +85,7 @@ async function createTeam(team, size, count ){
     }
     document.querySelector("#teams").appendChild(row)
 
-/*
-
-    const clubCol = document.querySelector("#club-col")
-    clubCol.style.cursor = "pointer"
-    clubCol.onclick = function() {
-        location.replace(clubLinkVar)
-        }
-        document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubInfo)
-
-        */
+    
 
 
 }
@@ -111,7 +101,7 @@ async function createReferees(referees){
 
 
 async function createReferee(refereeName, size, count ){
-    const refereeUrlGet = refereeURL + refereeName
+    const refereeUrlGet = refereeUrl + refereeName
 
     const referee = await fetch(refereeUrlGet).then(handleHttpErrors)
 

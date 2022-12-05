@@ -1,8 +1,5 @@
 import {handleHttpErrors, sanitizeStringWithTableRows} from "../../utils.js";
-const refereesUrl = "http://localhost:8080/api/users/referees";
-const makeAdminUrl = "http://localhost:8080/api/users/makeAdmin/"
-const teamsUrl = "http://localhost:8080/api/teams";
-let teamsKeyValue = new Map();
+import {makeAdminUrl, refereesUrl} from "../../settings.js";
 
 export function initGetReferees(){
     setup()

@@ -1,9 +1,6 @@
 import { handleHttpErrors } from "../../utils.js";
-const matchesUrl = "http://localhost:8080/api/matches/";
-const teamsUrl = "http://localhost:8080/api/teams";
-const signupsUrl = "http://localhost:8080/api/signups/findSignups/";
-const addSignUpUrl = "http://localhost:8080/api/signups";
-const refereeUrl = "http://localhost:8080/api/users/referee";
+import {matchesUrl, teamsUrl, refereeUrl, signupsUrl, addSignUpUrl} from "../../settings.js";
+
 let teamsKeyValue = new Map();
 let user;
 let matchId;
