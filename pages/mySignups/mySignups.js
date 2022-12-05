@@ -1,7 +1,7 @@
-import {refereeUrl, teamsUrl, clubUrl,myMatchesSignups } from "../../settings.js";
+import {refereeUrl, teamsUrl, clubUrl,myMatchesAccepted } from "../../settings.js";
 import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
 
-export function initMyMatches() {
+export function initMySignups() {
     setup();
 }
 
@@ -10,8 +10,9 @@ let matches;
 
 async function setup() {
     matches = await getAllMatches();
+    console.log(matches)
     const teams = await getAllTeams();
-    displayMatches(matches);
+    displayMatches(matches, teams);
     const clubs = await fetch(clubUrl).then(handleHttpErrors);
 }
 
@@ -23,7 +24,7 @@ function filterMatches(divisionId) {
 
 async function getAllMatches() {
     const username = await getUserName()
-    const matchesUrl = myMatchesSignups + username
+    const matchesUrl = myMatchesAccepted + username
     const matches = await fetch(matchesUrl).then(handleHttpErrors);
     return matches;
 }

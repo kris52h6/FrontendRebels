@@ -21,6 +21,7 @@ import {initCreateClub} from "./pages/createClub/createClub.js"
 import {initClub} from "./pages/club/club.js";
 import {initTeam} from "./pages/team/team.js";
 import {initMyMatches} from "./pages/myMatches/myMatches.js";
+import {initMySignups} from "./pages/mySignups/mySignups.js";
 
 
 window.addEventListener("load", async () => {
@@ -40,6 +41,7 @@ window.addEventListener("load", async () => {
   const templateClub = await loadHtml("./pages/club/club.html")
   const templateTeam = await loadHtml("./pages/team/team.html")
   const templateMyMatches = await loadHtml("./pages/myMatches/myMatches.html")
+  const templateMySignups = await loadHtml("./pages/mySignups/mySignups.html")
 
   adjustForMissingHash();
 
@@ -116,10 +118,14 @@ window.addEventListener("load", async () => {
         renderTemplate(templateLogout, "content");
         initLogout();
       },
+      "/mySignups": () =>{
+    renderTemplate(templateMySignups, "content");
+    initMySignups()
+      },
       "/myProfile": () => {
         renderTemplate(templateMyProfile, "content");
         initMyProfile();
-      }
+      },
     })
     .notFound(() => {
       renderTemplate(templateNotFound, "content");

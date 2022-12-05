@@ -43,7 +43,8 @@ async function getUserFromUrl(){
 
 export function createNavBar(isLoggedIn){
     if(isLoggedIn){
-        createRefereeNavBar()
+        createMyMatches()
+        createMySignups()
         createNavMyProfile()
     }
     else{
@@ -51,7 +52,7 @@ export function createNavBar(isLoggedIn){
     }
 }
 
-function createRefereeNavBar(){
+function createMyMatches(){
     const li = document.createElement("li")
     li.setAttribute("class", "nav-item nav-my-matches")
 
@@ -60,6 +61,20 @@ function createRefereeNavBar(){
     a.setAttribute("href", "/myMatches")
     a.setAttribute("data-navigo", true)
     a.textContent = "Mine Kampe"
+
+    li.append(a)
+    document.querySelector("#menu").append(li)
+}
+
+function createMySignups(){
+    const li = document.createElement("li")
+    li.setAttribute("class", "nav-item nav-my-matches")
+
+    const a = document.createElement("a")
+    a.className = "nav-link"
+    a.setAttribute("href", "/mySignups")
+    a.setAttribute("data-navigo", true)
+    a.textContent = "Mine Tilmeldte Kampe"
 
     li.append(a)
     document.querySelector("#menu").append(li)

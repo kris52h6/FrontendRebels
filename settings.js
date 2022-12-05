@@ -9,4 +9,5 @@ export const refereesUrl = ip + "api/users/referees";
 export const loginUrl = ip + "api/auth/login";
 export const signupsUrl = ip + "api/signups/findSignups/";
 export const addSignUpUrl = ip + "api/signups";
-export const myMatchesUrl = ip + "api/users/matches/";
+export const myMatchesAccepted = ip + "api/matches/accepted/";
+export const myMatchesSignups = ip + "api/matches/signups/"
