@@ -1,7 +1,8 @@
-import { matchesUrl, teamsUrl, clubUrl } from "../../settings.js";
+import {refereeUrl, teamsUrl, clubUrl,myMatchesUrl } from "../../settings.js";
 import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
 
 export function initMyMatches() {
+    setup();
 }
 
 let teamsKeyValue = new Map();
@@ -9,6 +10,7 @@ let matches;
 
 async function setup() {
     matches = await getAllMatches();
+    console.log(matches)
     const teams = await getAllTeams();
     displayMatches(matches, teams);
     const clubs = await fetch(clubUrl).then(handleHttpErrors);
@@ -29,8 +31,19 @@ function filterMatches(divisionId) {
 }
 
 async function getAllMatches() {
-    const matches = await fetch(matchesUrl).then(handleHttpErrors);
+    const username = await getUserName()
+    const matchesUrl = myMatchesUrl + username
+    const matches = await fetch(matchesUrl).then(handleHttpErrors).then(match => match.matches);
     return matches;
+}
+
+async function getUserName(){
+    const token = "Bearer " + localStorage.getItem("token")
+    const options = {}
+    options.method = "GET"
+    options.headers = {"Authorization": token}
+    const response = await fetch(refereeUrl,options).then(handleHttpErrors)
+    return response.username
 }
 
 async function getAllTeams() {
