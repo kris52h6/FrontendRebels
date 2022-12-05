@@ -18,7 +18,6 @@ async function checkLoginStatusAndCreateNavBar(){
                 if(accessOptions[i] == "admin"){
                     createAdminNavBar()
                 }
-              console.log("Sucess")
                 if (alreadyRan === 0) {
                     createNavBar(true)
 
