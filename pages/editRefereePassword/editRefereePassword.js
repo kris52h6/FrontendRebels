@@ -1,5 +1,5 @@
 
-import {refereeUrl, refreeUrlChangePassword} from "../../settings.js";
+import {refereeUrl, refereeUrlChangePassword} from "../../settings.js";
 
 import {handleHttpErrors} from "../../utils.js";
 
@@ -39,7 +39,7 @@ async function editReferee() {
             options.method = "PATCH"
             options.headers = myHeaders
             options.body = JSON.stringify(refreeUpdates)
-            const addUser = await fetch(refreeUrlChangePassword, options)
+            const addUser = await fetch(refereeUrlChangePassword, options)
             location.replace("/#/myProfile")
         }
     }
