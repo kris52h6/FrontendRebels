@@ -1,1 +1,11 @@
-// for often used URL's etc.
+const ip = "http://localhost:8080/"
+export const matchesUrl = ip + "api/matches/";
+export const teamsUrl = ip + "api/teams/";
+export const clubUrl = ip + "api/clubs/"
+export const refereeUrl = ip + "api/users/referee/";
+export const refreeUrlChangePassword = ip + "api/users/refereePassword";
+export let makeAdminUrl = ip + "api/users/makeAdmin/"
+export const refereesUrl = ip + "api/users/referees";
+export const loginUrl = ip + "api/auth/login";
+export const signupsUrl = ip + "api/signups/findSignups/";
+export const addSignUpUrl = ip + "api/signups";

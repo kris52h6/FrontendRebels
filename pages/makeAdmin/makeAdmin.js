@@ -1,5 +1,6 @@
 import {handleHttpErrors, sanitizeStringWithTableRows} from "../../utils.js";
-var makeAdminUrl = "http://localhost:8080/api/users/makeAdmin/"
+import {makeAdminUrl} from "../../settings.js";
+
 export function initMakeAdmin(){
     window.onload = getUserInfo()
 

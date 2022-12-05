@@ -1,6 +1,5 @@
+import { matchesUrl, teamsUrl } from "../../settings.js";
 import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
-const matchesUrl = "http://localhost:8080/api/matches";
-const teamsUrl = "http://localhost:8080/api/teams";
 let teamsKeyValue = new Map();
 let matches;
 

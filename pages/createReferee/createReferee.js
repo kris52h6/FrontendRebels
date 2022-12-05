@@ -1,4 +1,5 @@
-const refereeUrl = "http://localhost:8080/api/users/referee";
+
+import{refereeUrl} from "../../settings.js";
 import { handleHttpErrors } from "../../utils.js";
 
 export function initCreateReferee(){

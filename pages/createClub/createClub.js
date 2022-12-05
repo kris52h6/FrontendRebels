@@ -1,4 +1,5 @@
-const clubUrl = "http://localhost:8080/api/clubs/";
+import {clubUrl} from "../../settings.js";
+
 import { handleHttpErrors } from "../../utils.js";
 
 export function initCreateClub(){

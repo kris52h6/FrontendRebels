@@ -1,6 +1,5 @@
-const refereeUrl = "http://localhost:8080/api/users/referee";
-const clubUrl = "http://localhost:8080/api/clubs/user/"
 const clubUrlLink = "/#/club?clubName="
+import {refereeUrl} from "../../settings.js";
 
 
 import { handleHttpErrors } from "../../utils.js";

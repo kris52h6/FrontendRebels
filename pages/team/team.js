@@ -1,4 +1,4 @@
-const teamURL = "http://localhost:8080/api/teams/";
+import {teamsUrl} from "../../settings.js";
 import {handleHttpErrors} from "../../utils.js";
 
 export function initTeam() {
@@ -6,7 +6,7 @@ export function initTeam() {
 }
 
 async function getTeam() {
-    const teamName = teamURL + getTeamFromUrl();
+    const teamName = teamsUrl + getTeamFromUrl();
     await fetch(teamName)
         .then(handleHttpErrors)
         .then(data => {

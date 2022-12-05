@@ -1,5 +1,6 @@
-const refereeUrl = "http://localhost:8080/api/users/referee";
-const refreeUrlChangePassword = "http://localhost:8080/api/users/refereePassword";
+
+import {refereeUrl, refreeUrlChangePassword} from "../../settings.js";
+
 import {handleHttpErrors} from "../../utils.js";
 
 export function initEditRefereePassword() {
