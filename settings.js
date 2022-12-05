@@ -1,4 +1,4 @@
-const ip = "http://localhost:8080/"
+const ip = "https://dommerportal.azurewebsites.net/"
 export const matchesUrl = ip + "api/matches/";
 export const teamsUrl = ip + "api/teams/";
 export const clubUrl = ip + "api/clubs/"
