@@ -74,7 +74,13 @@ function getMatchIdFromUrl() {
 function displayMatch(matchData) {
     document.querySelector("#hometeam").innerHTML = DOMPurify.sanitize(teamsKeyValue.get(matchData.homeTeamId));
     document.querySelector("#awayteam").innerHTML = DOMPurify.sanitize(teamsKeyValue.get(matchData.awayTeamId));
-    document.querySelector("#starttime").innerHTML = matchData.startTime;
+    document.querySelector(".hometeam-img").src = "./images/logos/" + matchData.homeTeamId + ".png";
+    document.querySelector(".awayteam-img").src = "./images/logos/" + matchData.awayTeamId + ".png";
+    
+    const matchDateTime = matchData.startTime.split("T")
+    document.querySelector("#starttime").innerHTML = matchDateTime[1];
+    document.querySelector("#match-date").innerHTML = matchDateTime[0];
+    document.querySelector("#number-of-accepted-referees").innerText = matchData.acceptedReferees.length + " / 5";
 }
 
 function createKeyValuePairs(teams) {
