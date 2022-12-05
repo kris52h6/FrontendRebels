@@ -63,6 +63,7 @@ function displayAccepted(match) {
         )
         .join("\n");
     acceptedList.innerHTML = DOMPurify.sanitize(listData);
+    document.querySelector("#number-of-accepted-referees").innerText = match.acceptedReferees.length + " / " + match.numberOfReferees;
 }
 
 function getMatchIdFromUrl() {
@@ -80,7 +81,7 @@ function displayMatch(matchData) {
     const matchDateTime = matchData.startTime.split("T");
     document.querySelector("#starttime").innerHTML = matchDateTime[1];
     document.querySelector("#match-date").innerHTML = matchDateTime[0];
-    document.querySelector("#number-of-accepted-referees").innerText = matchData.acceptedReferees.length + " / 5";
+    
 }
 
 function createKeyValuePairs(teams) {
@@ -129,7 +130,7 @@ async function addAccepted(refereeUsername, signupId) {
     options.body = JSON.stringify(acceptedObject);
 
     const refereeIsAccepted = await checkIfRefereeIsAdded(refereeUsername);
-    const refereeTeam = await fetch(teamsUrl + "/" + globalMatch.refereeTeamId).then(handleHttpErrors);
+    const refereeTeam = await fetch(teamsUrl + globalMatch.refereeTeamId).then(handleHttpErrors);
 
     if (user.clubName == refereeTeam.club) {
         if (!refereeIsAccepted) {

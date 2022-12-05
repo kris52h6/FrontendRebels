@@ -88,14 +88,17 @@ function displayMatch(m) {
 
     match.id = "match-id" + m.id;
 
-    const amountOfAcceptedReferees = m.acceptedReferees;
-    const refereeNodes = clone.querySelectorAll(".referees");
-    if (amountOfAcceptedReferees != 0) {
-        for (let i = 0; i < amountOfAcceptedReferees.length; i++) {
-            refereeNodes[0].children[i].style.color = "Green";
-        }
+    for(let i = 0; i < m.numberOfReferees; i++){
+        const newRefereeIcon = document.createElement("i")
+        newRefereeIcon.classList.add("fa-solid")
+        newRefereeIcon.classList.add("fa-user")
+        clone.querySelector(".referees").appendChild(newRefereeIcon)
+        for(let j = 0; j < m.acceptedReferees.length; j++){
+            if(i < m.acceptedReferees.length){
+                newRefereeIcon.style.color = "Green"
+            }
+        } 
     }
-
     match.appendChild(clone);
     matchContent.append(match);
 }
