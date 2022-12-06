@@ -17,19 +17,9 @@ async function createReferee() {
         if (checkIfEmptyObject(newReferee)) {
                 createErrorMessage("Venligst udfyld alle felter")
         } else if (validateAllObjectWhiteSpaces(newReferee)) {
-                 createErrorMessage("Du må ikke bruge mellemrum")
+                createErrorMessage("Du må ikke bruge mellemrum")
         } else { 
-            const options = {}
-            options.method = "POST"
-            options.headers = {"Content-type": "application/json"}
-            options.body = JSON.stringify(newReferee)
-            //if user is added to database, then redirect to login page
-            await fetch(refereeUrl, options).then(handleHttpErrors).then(data => {
-                console.log(data)
-                location.replace("/#/login")
-            }).catch(err => {
-                createErrorMessage(err.message  )
-            })
+           sendPostRequest(newReferee)
         }
     }
 }
@@ -48,3 +38,16 @@ function inputFields() {
     return newReferee
 }
 
+
+async function sendPostRequest(newReferee){
+    const options = {}
+    options.method = "POST"
+    options.headers = {"Content-type": "application/json"}
+    options.body = JSON.stringify(newReferee)
+    //if user is added to database, then redirect to login page
+    await fetch(refereeUrl, options).then(handleHttpErrors).then(data => {
+        location.replace("/#/login")
+    }).catch(err => {
+        createErrorMessage(err.message  )
+    })
+}
