@@ -118,4 +118,30 @@ export async function checkAccess(role){
   catch(e){
      return false;
   }
+
 }
+
+export function hasWhiteSpace(s) {
+  return s.match(/^\s*$/) !== null
+}
+
+export function validateAllObjectWhiteSpaces(object){
+  for (const field in object){
+    var input = object[field]
+    if(hasWhiteSpace(input)) {
+      return true
+    }
+  }
+  return false
+}
+
+export function checkIfEmptyObject(object) {
+  console.log(object)
+  for (const field in object) {
+    if (object[field] === "") {
+      return true
+    }
+  }
+  return false;
+}
+

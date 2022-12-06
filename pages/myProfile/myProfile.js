@@ -38,7 +38,6 @@ async function getUserInfo(){
     document.querySelector("#input-user-license").innerHTML = DOMPurify.sanitize(refereeInfo.license)
     const clubInfo = refereeInfo.clubName
 
-    let clubLink;
     const clubLinkVar = clubUrlLink + clubInfo;
     console.log (clubLinkVar)
     const clubCol = document.querySelector("#club-col")

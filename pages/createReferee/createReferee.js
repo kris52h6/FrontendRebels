@@ -1,6 +1,6 @@
 
 import{refereeUrl} from "../../settings.js";
-import { handleHttpErrors } from "../../utils.js";
+import {handleHttpErrors, validateAllObjectWhiteSpaces, checkIfEmptyObject} from "../../utils.js";
 
 export function initCreateReferee(){
     window.addEventListener("load", createReferee())
@@ -19,16 +19,17 @@ async function createReferee(){
         newReferee.bankInformation = document.querySelector("#input-user-bankinformation").value
         newReferee.license = document.querySelector("#input-user-license").value
 
-     if (!validateRefereeWhiteSpace(newReferee)){
-            const errorDiv = document.querySelector("#error")
-            errorDiv.innerHTML = "Du må ikke bruge mellemrum"
-            errorDiv.removeAttribute("hidden")
-        }else if(!validateReferee(newReferee)){
-            console.log("HEJ")
+
+        if(checkIfEmptyObject(newReferee)){
             const errorDiv = document.querySelector("#error")
             errorDiv.innerHTML = "Venligst udfyld alle felter"
             errorDiv.removeAttribute("hidden")
-        }else {
+        }else if (!validateAllObjectWhiteSpaces(newReferee)) {
+            const errorDiv = document.querySelector("#error")
+            errorDiv.innerHTML = "Du må ikke bruge mellemrum"
+            errorDiv.removeAttribute("hidden")
+        }
+        else {
             const options = {}
             options.method = "POST"
             options.headers = {"Content-type": "application/json"}
@@ -45,33 +46,3 @@ async function createReferee(){
         }
         }
     }
-
-    function validateReferee(newReferee){
-        if(newReferee.username === ""
-            || newReferee.email === ""
-            || newReferee.password === ""
-            || newReferee.firstname === ""
-            || newReferee.lastname === ""
-            || newReferee.bankInformation === ""
-            || newReferee.license === ""){
-            return true
-        }
-        return false
-    }
-
-    function hasWhiteSpace(s) {
-        const whitespaceChars = [' ', '\t', '\n'];
-        return whitespaceChars.some(char => s.includes(char));
-    }
-
-    function validateRefereeWhiteSpace(newReferee){
-        for (const refereeField in newReferee){
-            var input = newReferee[refereeField]
-            if(hasWhiteSpace(input)) {
-                console.log(hasWhiteSpace(input))
-                return true
-            }else {
-                return false
-            }
-        }
-}
