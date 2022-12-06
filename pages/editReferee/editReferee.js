@@ -62,7 +62,6 @@ async function editReferee(){
         options.method = "PATCH"
         options.headers = myHeaders
         options.body = JSON.stringify(refereeUpdate)
-        console.log(options)
         await fetch(refereeUrl, options).then(handleHttpErrors).then(data => {
             location.replace("/#/myProfile")
         }).catch(err => {
