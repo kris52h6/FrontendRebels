@@ -1,7 +1,6 @@
 import {clubUrl} from "../../settings.js";
-import { handleHttpErrors } from "../../utils.js";
+import { handleHttpErrors, token } from "../../utils.js";
 
-const token = "Bearer " + localStorage.getItem("token")
 
 export function initCreateClub(){
     window.addEventListener("load", createClub())

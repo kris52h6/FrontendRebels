@@ -1,3 +1,8 @@
+
+
+export const token = "Bearer " + localStorage.getItem("token")
+
+
 export function renderTemplate(template, contentId) {
   const content = document.getElementById(contentId);
   if (!content) {

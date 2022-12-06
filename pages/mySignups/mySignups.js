@@ -11,7 +11,6 @@ let matches;
 async function setup() {
     matches = await getAllMatches();
     console.log(matches)
-    const teams = await getAllTeams();
     displayMatches(matches, teams);
     const clubs = await fetch(clubUrl).then(handleHttpErrors);
 }

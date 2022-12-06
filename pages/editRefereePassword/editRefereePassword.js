@@ -1,9 +1,8 @@
 
 import {refereeUrl, refereeUrlChangePassword} from "../../settings.js";
 
-import {handleHttpErrors, createErrorMessage,checkIfEmptyObject, validateAllObjectWhiteSpaces} from "../../utils.js";
+import {handleHttpErrors, createErrorMessage,checkIfEmptyObject, validateAllObjectWhiteSpaces, token} from "../../utils.js";
 
-const token = "Bearer " + localStorage.getItem("token")
 
 export function initEditRefereePassword() {
     window.addEventListener("load", editReferee())
