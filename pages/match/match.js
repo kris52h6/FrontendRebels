@@ -33,12 +33,12 @@ async function displaySignups(signups) {
     let listData = signups
         .map(
             (s) =>
-                `
-        <div class = "list-item">
-        <li id="${s.id}">${s.refereeUsername}</li> 
-        <button class = "btn">+</button>
-        </div>
-        `
+            `
+                <div class = "list-item">
+                <li id="${s.id}">${s.refereeUsername}</li> 
+                <button class = "btn">+</button>
+                </div>
+            `
         )
         .join("\n");
     signupListClone.innerHTML = DOMPurify.sanitize(listData);
