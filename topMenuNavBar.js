@@ -60,7 +60,7 @@ function createMyMatches() {
 
 function createMySignups() {
     const li = document.createElement("li")
-    li.setAttribute("class", "nav-item nav-my-matches")
+    li.setAttribute("class", "nav-item nav-my-signups")
 
     const a = document.createElement("a")
     a.className = "nav-link"
@@ -120,6 +120,15 @@ function createLoginButton() {
     if (document.querySelector(".nav-admin")) {
         document.querySelector(".nav-admin").remove()
     }
+    if (document.querySelector(".nav-my-matches")) {
+        document.querySelector(".nav-my-matches").remove()
+    }
+    if (document.querySelector(".nav-my-signups")) {
+        document.querySelector(".nav-my-signups").remove()
+    }
+     if (document.querySelector(".create-club")) {
+        document.querySelector(".create-club").remove()
+    }
     const a = document.createElement("a")
     a.setAttribute("href", "/#/login")
     a.setAttribute("data-navigo", "true")
@@ -142,7 +151,7 @@ function createAdminNavBar() {
     document.querySelector("#menu").append(li)
 
     const li2 = document.createElement("li")
-    li2.setAttribute("class", "nav-item nav-admin")
+    li2.setAttribute("class", "nav-item create-club")
 
     const a2 = document.createElement("a")
     a2.className = "nav-link"
