@@ -149,5 +149,17 @@ function createAdminNavBar(){
 
     li.append(a)
     document.querySelector("#menu").append(li)
+
+    const li2 = document.createElement("li")
+    li2.setAttribute("class", "nav-item nav-admin")
+
+    const a2 = document.createElement("a")
+    a2.className = "nav-link"
+    a2.setAttribute("href", "/createClub")
+    a2.setAttribute("data-navigo", true)
+    a2.textContent = "Opret Klub"
+
+    li2.append(a2)
+    document.querySelector("#menu").append(li2)
 }
 
