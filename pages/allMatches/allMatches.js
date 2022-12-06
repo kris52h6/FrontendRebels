@@ -17,9 +17,14 @@ async function setup() {
 
 function filterButtons() {
     const buttons = document.querySelector(".btns");
+
     buttons.addEventListener("mouseup", (e) => {
-        const divisionId = e.target.id;
-        filterMatches(divisionId);
+        if (e.target.tagName.toLowerCase() == "button") {
+            clearFilterButtons();
+            e.target.classList.add("active-filter");
+            const divisionId = e.target.id;
+            filterMatches(divisionId);
+        }
     });
 }
 
@@ -30,6 +35,14 @@ function filterMatches(divisionId) {
     }
     const filteredMatches = matches.filter((m) => m.divisionName == divisionId);
     displayMatches(filteredMatches);
+}
+
+function clearFilterButtons() {
+    const buttons = document.querySelectorAll(".btn");
+    console.log(buttons);
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active-filter");
+    }
 }
 
 async function getAllMatches() {
