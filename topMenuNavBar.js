@@ -1,21 +1,21 @@
-import {checkAccess, handleHttpErrors} from "../../utils.js";
+import {checkAccess, handleHttpErrors, token} from "/utils.js";
 
 const userUrl = "http://localhost:8080/api/login/user-fromtoken";
 
 
-window.addEventListener("load",checkLoginStatusAndCreateNavBar())
+window.addEventListener("load", checkLoginStatusAndCreateNavBar())
 
 
-async function checkLoginStatusAndCreateNavBar(){
+async function checkLoginStatusAndCreateNavBar() {
 
-    const accessOptions = ["admin","user","referee" ]
+    const accessOptions = ["admin", "user", "referee"]
 
     var alreadyRan = 0;
 
-    for(let i = 0; i < accessOptions.length; i++){
-        checkAccess(accessOptions[i]).then(result =>{
-            if(result){
-                if(accessOptions[i] == "admin"){
+    for (let i = 0; i < accessOptions.length; i++) {
+        checkAccess(accessOptions[i]).then(result => {
+            if (result) {
+                if (accessOptions[i] == "admin") {
                     createAdminNavBar()
                 }
                 if (alreadyRan === 0) {
@@ -24,16 +24,16 @@ async function checkLoginStatusAndCreateNavBar(){
                     i = accessOptions.length;
                     alreadyRan = 1;
                 }
+            } else if (i === accessOptions.length - 1 && alreadyRan === 0) {
+                createNavBar(false)
             }
-        else if(i === accessOptions.length-1 && alreadyRan === 0){
-            createNavBar(false)
-        }})
+        })
     }
 }
 
 
-async function getUserFromUrl(){
-    const token = "Bearer " + localStorage.getItem("token")
+async function getUserFromUrl() {
+
     const options = {}
     options.method = "GET"
     options.headers = {"Authorization": token}
@@ -41,18 +41,17 @@ async function getUserFromUrl(){
     return await fetch(userUrl, options).then(handleHttpErrors)
 }
 
-export function createNavBar(isLoggedIn){
-    if(isLoggedIn){
+export function createNavBar(isLoggedIn) {
+    if (isLoggedIn) {
         createMyMatches()
         createMySignups()
         createNavMyProfile()
-    }
-    else{
+    } else {
         createLoginButton()
     }
 }
 
-function createMyMatches(){
+function createMyMatches() {
     const li = document.createElement("li")
     li.setAttribute("class", "nav-item nav-my-matches")
 
@@ -66,7 +65,7 @@ function createMyMatches(){
     document.querySelector("#menu").append(li)
 }
 
-function createMySignups(){
+function createMySignups() {
     const li = document.createElement("li")
     li.setAttribute("class", "nav-item nav-my-matches")
 
@@ -80,7 +79,7 @@ function createMySignups(){
     document.querySelector("#menu").append(li)
 }
 
-function createNavMyProfile () {
+function createNavMyProfile() {
     const div = document.createElement("div")
     div.className = "dropdown"
     div.id = "dropdown-logged-in"
@@ -88,8 +87,8 @@ function createNavMyProfile () {
     const button = document.createElement("button")
     button.className = "btn btn-primary dropdown-toggle"
     button.type = "button"
-    button.setAttribute("data-bs-toggle","dropdown")
-    button.setAttribute("aria-expanded","false")
+    button.setAttribute("data-bs-toggle", "dropdown")
+    button.setAttribute("aria-expanded", "false")
 
     getUserFromUrl().then(user => {
         button.textContent = user.username
@@ -122,11 +121,11 @@ function createNavMyProfile () {
     document.querySelector("#top-menu-container").appendChild(div)
 }
 
-function createLoginButton(){
-    if(document.querySelector("#dropdown-logged-in")){
+function createLoginButton() {
+    if (document.querySelector("#dropdown-logged-in")) {
         document.querySelector("#dropdown-logged-in").remove()
     }
-    if(document.querySelector(".nav-admin")){
+    if (document.querySelector(".nav-admin")) {
         document.querySelector(".nav-admin").remove()
     }
     const a = document.createElement("a")
@@ -137,7 +136,7 @@ function createLoginButton(){
     document.querySelector("#top-menu-container").appendChild(a)
 }
 
-function createAdminNavBar(){
+function createAdminNavBar() {
     const li = document.createElement("li")
     li.setAttribute("class", "nav-item nav-admin")
 
