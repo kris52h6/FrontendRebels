@@ -1,4 +1,4 @@
-import {handleHttpErrors, sanitizeStringWithTableRows} from "../../utils.js";
+import {handleHttpErrors, sanitizeStringWithTableRows, token} from "../../utils.js";
 import {makeAdminUrl} from "../../settings.js";
 
 export function initMakeAdmin(){
@@ -14,7 +14,6 @@ async function getUserInfo(){
 async function makeAdmin(username){
     let adminUrl = makeAdminUrl + username
 
-    const token = "Bearer " + localStorage.getItem("token")
     const options = {}
     const myHeaders = new Headers();
     myHeaders.append('Authorization', token);

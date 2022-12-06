@@ -1,4 +1,4 @@
-import {handleHttpErrors, sanitizeStringWithTableRows} from "../../utils.js";
+import {handleHttpErrors, sanitizeStringWithTableRows, token} from "../../utils.js";
 import {makeAdminUrl, refereesUrl} from "../../settings.js";
 
 export function initGetReferees(){
@@ -11,7 +11,6 @@ async function setupReferees(){
 }
 
 async function getAllReferees(){
-    const token = "Bearer " + localStorage.getItem("token")
     const options = {}
     options.method = "GET"
     options.headers = {"Authorization": token}
