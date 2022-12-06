@@ -5,6 +5,12 @@ export function initMakeAdmin(){
     window.onload = getUserInfo()
 }
 
+async function getUserInfo(){
+    const url = window.location.href.split("=");
+    const username = url[1];
+    await makeAdmin(username)
+}
+
 async function makeAdmin(username){
     let adminUrl = makeAdminUrl + username
 
@@ -16,10 +22,7 @@ async function makeAdmin(username){
     options.headers = myHeaders
     await fetch(adminUrl, options)
     location.replace("/#/getReferees")
+
+
 }
 
-async function getUserInfo(){
-    const url = window.location.href.split("=");
-    const username = url[1];
-    await makeAdmin(username)
-}
