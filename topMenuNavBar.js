@@ -1,21 +1,16 @@
-import {checkAccess, handleHttpErrors, token} from "/utils.js";
+import {checkAccess, handleHttpErrors, token} from "./utils.js";
 
 const userUrl = "http://localhost:8080/api/login/user-fromtoken";
-
-
 window.addEventListener("load", checkLoginStatusAndCreateNavBar())
 
-
 async function checkLoginStatusAndCreateNavBar() {
-
     const accessOptions = ["admin", "user", "referee"]
-
-    var alreadyRan = 0;
+    let alreadyRan = 0;
 
     for (let i = 0; i < accessOptions.length; i++) {
         checkAccess(accessOptions[i]).then(result => {
             if (result) {
-                if (accessOptions[i] == "admin") {
+                if (accessOptions[i] === "admin") {
                     createAdminNavBar()
                 }
                 if (alreadyRan === 0) {
@@ -33,11 +28,9 @@ async function checkLoginStatusAndCreateNavBar() {
 
 
 async function getUserFromUrl() {
-
     const options = {}
     options.method = "GET"
     options.headers = {"Authorization": token}
-
     return await fetch(userUrl, options).then(handleHttpErrors)
 }
 
@@ -72,7 +65,7 @@ function createMySignups() {
     const a = document.createElement("a")
     a.className = "nav-link"
     a.setAttribute("href", "/mySignups")
-    a.setAttribute("data-navigo", true)
+    a.setAttribute("data-navigo", "true")
     a.textContent = "Mine Tilmeldte Kampe"
 
     li.append(a)
@@ -95,7 +88,6 @@ function createNavMyProfile() {
     })
 
     div.append(button)
-
     const ul = document.createElement("ul")
     ul.className = "dropdown-menu"
 
