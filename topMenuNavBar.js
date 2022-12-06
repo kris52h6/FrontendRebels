@@ -52,7 +52,7 @@ function createMyMatches() {
     a.className = "nav-link"
     a.setAttribute("href", "/myMatches")
     a.setAttribute("data-navigo", true)
-    a.textContent = "Mine Kampe"
+    a.textContent = "Mine Godkendte Kampe"
 
     li.append(a)
     document.querySelector("#menu").append(li)
@@ -122,7 +122,7 @@ function createLoginButton() {
     }
     const a = document.createElement("a")
     a.setAttribute("href", "/#/login")
-    a.setAttribute("data-navigo", true)
+    a.setAttribute("data-navigo", "true")
     a.textContent = "Login"
     a.setAttribute("class", "nav-link")
     document.querySelector("#top-menu-container").appendChild(a)
@@ -135,7 +135,7 @@ function createAdminNavBar() {
     const a = document.createElement("a")
     a.className = "nav-link"
     a.setAttribute("href", "/getReferees")
-    a.setAttribute("data-navigo", true)
+    a.setAttribute("data-navigo", "true")
     a.textContent = "Alle dommere"
 
     li.append(a)
@@ -147,7 +147,7 @@ function createAdminNavBar() {
     const a2 = document.createElement("a")
     a2.className = "nav-link"
     a2.setAttribute("href", "/createClub")
-    a2.setAttribute("data-navigo", true)
+    a2.setAttribute("data-navigo", "true")
     a2.textContent = "Opret Klub"
 
     li2.append(a2)
