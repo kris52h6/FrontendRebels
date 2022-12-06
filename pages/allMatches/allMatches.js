@@ -12,6 +12,35 @@ async function setup() {
     filterButtons();
 }
 
+function filterButtons() {
+    const buttons = document.querySelector(".btns");
+
+    buttons.addEventListener("mouseup", (e) => {
+        if (e.target.tagName.toLowerCase() == "button") {
+            clearFilterButtons();
+            e.target.classList.add("active-filter");
+            const divisionId = e.target.id;
+            filterMatches(divisionId);
+        }
+    });
+}
+
+function filterMatches(divisionId) {
+    if (divisionId === "alle") {
+        displayMatches(matches);
+        return;
+    }
+    const filteredMatches = matches.filter((m) => m.divisionName == divisionId);
+    displayMatches(filteredMatches);
+}
+
+function clearFilterButtons() {
+    const buttons = document.querySelectorAll(".btn");
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active-filter");
+    }
+}
+
 async function getAllMatches() {
     const matches = await fetch(matchesUrl).then(handleHttpErrors);
     return matches;

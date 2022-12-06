@@ -1,15 +1,13 @@
 const clubUrlLink = "/#/club?clubName="
 import {refereeUrl} from "../../settings.js";
+import { handleHttpErrors, token } from "../../utils.js";
 
-
-import { handleHttpErrors } from "../../utils.js";
-export function initMyProfile() {
-    myProfileButtons()
+export async function initMyProfile() {
+    await myProfileButtons()
 }
 
-
-function myProfileButtons(){
-    getUserInfo()
+async function myProfileButtons(){
+    await setProfileInfo()
     document.querySelector("#profile-change-information").onclick = goToEditProfile
     document.querySelector("#profile-change-password").onclick = goToEditPassword
 }
@@ -22,29 +20,36 @@ function goToEditPassword(){
     location.replace("/#/editRefereePassword")
 }
 
-async function getUserInfo(){
-    const token = "Bearer " + localStorage.getItem("token")
+async function setProfileInfo(){
+    const referee = await getUserInfo()
+    setUserInfo(referee)
+    createClubLink(referee)
+}
 
+async function getUserInfo(){
     const options = {}
     options.method = "GET"
     options.headers = {"Authorization": token}
-
-    const refereeInfo = await fetch(refereeUrl,options).then(handleHttpErrors)
-    document.querySelector("#input-user-username").innerHTML = DOMPurify.sanitize(refereeInfo.username)
-    document.querySelector("#input-user-email").innerHTML =DOMPurify.sanitize(refereeInfo.email)
-    document.querySelector("#input-user-firstname").innerHTML = DOMPurify.sanitize(refereeInfo.firstname)
-    document.querySelector("#input-user-lastname").innerHTML = DOMPurify.sanitize(refereeInfo.lastname)
-    document.querySelector("#input-user-bankinformation").innerHTML = DOMPurify.sanitize(refereeInfo.bankInformation)
-    document.querySelector("#input-user-license").innerHTML = DOMPurify.sanitize(refereeInfo.license)
-    const clubInfo = refereeInfo.clubName
-
-    const clubLinkVar = clubUrlLink + clubInfo;
-    console.log (clubLinkVar)
-    const clubCol = document.querySelector("#club-col")
-    clubCol.style.cursor = "pointer"
-    clubCol.onclick = function() {
-        location.replace(clubLinkVar)
-        }
-        document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubInfo)
+    return await fetch(refereeUrl,options).then(handleHttpErrors)
 }
 
+function setUserInfo(referee){
+    document.querySelector("#input-user-username").innerHTML = DOMPurify.sanitize(referee.username)
+    document.querySelector("#input-user-email").innerHTML =DOMPurify.sanitize(referee.email)
+    document.querySelector("#input-user-firstname").innerHTML = DOMPurify.sanitize(referee.firstname)
+    document.querySelector("#input-user-lastname").innerHTML = DOMPurify.sanitize(referee.lastname)
+    document.querySelector("#input-user-bankinformation").innerHTML = DOMPurify.sanitize(referee.bankInformation)
+    document.querySelector("#input-user-license").innerHTML = DOMPurify.sanitize(referee.license)
+}
+
+function createClubLink(referee){
+    const clubName = referee.clubName
+    const clubLink = clubUrlLink + clubName;
+    const clubCol = document.querySelector("#club-col")
+
+    clubCol.style.cursor = "pointer"
+    clubCol.onclick = function() {
+        location.replace(clubLink)
+    }
+    document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubName)
+}

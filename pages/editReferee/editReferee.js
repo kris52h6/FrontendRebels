@@ -1,7 +1,6 @@
 import {refereeUrl} from "../../settings.js";
-import { handleHttpErrors, createErrorMessage, validateAllObjectWhiteSpaces, checkIfEmptyObject} from "../../utils.js";
+import { handleHttpErrors, createErrorMessage, validateAllObjectWhiteSpaces, checkIfEmptyObject, token} from "../../utils.js";
 
-const token = "Bearer " + localStorage.getItem("token")
 
 
 export function initEditReferee(){

@@ -1,5 +1,5 @@
 import {refereeUrl} from "../../settings.js";
-import {handleHttpErrors, validateAllObjectWhiteSpaces, checkIfEmptyObject} from "../../utils.js";
+import {handleHttpErrors, validateAllObjectWhiteSpaces, checkIfEmptyObject, createErrorMessage} from "../../utils.js";
 
 
 export function initCreateReferee() {
