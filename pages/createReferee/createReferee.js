@@ -1,5 +1,5 @@
 import {refereeUrl} from "../../settings.js";
-import {handleHttpErrors, validateAllObjectWhiteSpaces, checkIfEmptyObject, createErrorMessage} from "../../utils.js";
+import {handleHttpErrors, validateAllObjectWhiteSpaces, checkIfEmptyObject} from "../../utils.js";
 
 
 export function initCreateReferee() {
@@ -18,7 +18,7 @@ async function createReferee() {
                 createErrorMessage("Venligst udfyld alle felter")
         } else if (validateAllObjectWhiteSpaces(newReferee)) {
                 createErrorMessage("Du må ikke bruge mellemrum")
-        } else { 
+        } else {
            sendPostRequest(newReferee)
         }
     }
