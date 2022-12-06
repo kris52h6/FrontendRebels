@@ -1,5 +1,5 @@
 import {teamsUrl} from "../../settings.js";
-import {handleHttpErrors} from "../../utils.js";
+import {handleHttpErrors, capitalizeFirstLetter} from "../../utils.js";
 
 export function initTeam() {
   window.addEventListener("load", getTeam());
@@ -12,7 +12,7 @@ async function getTeam() {
         .then(data => {
         console.log(data);
         document.querySelector("#input-team-name").innerHTML = DOMPurify.sanitize(data.name);
-        document.querySelector("#input-team-club").innerHTML = DOMPurify.sanitize(data.club);
+        document.querySelector("#input-team-club").innerHTML = DOMPurify.sanitize(capitalizeFirstLetter(data.club));
         document.querySelector("#team-name-header").innerHTML = DOMPurify.sanitize(data.name)
         });
 }

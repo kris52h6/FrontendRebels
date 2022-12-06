@@ -1,6 +1,7 @@
 import { handleHttpErrors } from "../../utils.js";
 import { matchesUrl, teamsUrl, refereeUrl, signupsUrl, addSignUpUrl } from "../../settings.js";
 
+let teamsKeyValue = new Map();
 let user;
 let matchId;
 let globalMatch;
@@ -13,7 +14,9 @@ async function setup() {
     matchId = getMatchIdFromUrl();
     const match = await fetch(matchesUrl + matchId).then(handleHttpErrors);
     globalMatch = match;
+    const teams = await fetch(teamsUrl).then(handleHttpErrors);
     const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
+    createKeyValuePairs(teams);
     displayMatch(match);
     displaySignups(signups);
     displayAccepted(match);
@@ -70,15 +73,20 @@ function getMatchIdFromUrl() {
 }
 
 function displayMatch(matchData) {
-    document.querySelector("#hometeam").innerHTML = DOMPurify.sanitize(matchData.homeTeamName);
-    document.querySelector("#awayteam").innerHTML = DOMPurify.sanitize(matchData.awayTeamName);
-    document.querySelector("#address").innerHTML = DOMPurify.sanitize(matchData.address);
+    document.querySelector("#hometeam").innerHTML = DOMPurify.sanitize(teamsKeyValue.get(matchData.homeTeamId));
+    document.querySelector("#awayteam").innerHTML = DOMPurify.sanitize(teamsKeyValue.get(matchData.awayTeamId));
     document.querySelector(".hometeam-img").src = "./images/logos/" + matchData.homeTeamImg + ".png";
     document.querySelector(".awayteam-img").src = "./images/logos/" + matchData.awayTeamImg + ".png";
 
     const matchDateTime = matchData.startTime.split("T");
     document.querySelector("#starttime").innerHTML = matchDateTime[1];
     document.querySelector("#match-date").innerHTML = matchDateTime[0];
+}
+
+function createKeyValuePairs(teams) {
+    for (let i = 0; i < teams.length; i++) {
+        teamsKeyValue.set(teams[i].id, teams[i].name);
+    }
 }
 
 async function addSignUp() {

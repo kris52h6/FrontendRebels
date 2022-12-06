@@ -1,6 +1,6 @@
 const clubUrlLink = "/#/club?clubName="
 import {refereeUrl} from "../../settings.js";
-import { handleHttpErrors, token } from "../../utils.js";
+import { handleHttpErrors, token, capitalizeFirstLetter } from "../../utils.js";
 
 export async function initMyProfile() {
     await myProfileButtons()
@@ -43,7 +43,7 @@ function setUserInfo(referee){
 }
 
 function createClubLink(referee){
-    const clubName = referee.clubName
+    let clubName = referee.clubName
     const clubLink = clubUrlLink + clubName;
     const clubCol = document.querySelector("#club-col")
 
@@ -51,5 +51,7 @@ function createClubLink(referee){
     clubCol.onclick = function() {
         location.replace(clubLink)
     }
+    clubName = capitalizeFirstLetter(clubName)
+    console.log(clubName)
     document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubName)
 }

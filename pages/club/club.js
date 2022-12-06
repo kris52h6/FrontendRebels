@@ -24,7 +24,7 @@ function createClubData(club){
     document.querySelector("#input-club-name").innerHTML = DOMPurify.sanitize(capitalizeFirstLetter(club.name));
     document.querySelector("#input-club-address").innerHTML = DOMPurify.sanitize(club.address);
     document.querySelector("#input-club-email").innerHTML = DOMPurify.sanitize(club.email);
-    document.querySelector("#club-name-header").innerHTML = DOMPurify.sanitize(club.name);
+    document.querySelector("#club-name-header").innerHTML = DOMPurify.sanitize(capitalizeFirstLetter(club.name));
     document.querySelector("#team-name-header").innerHTML = DOMPurify.sanitize(capitalizeFirstLetter(club.name)) + " hold";
 }
 
