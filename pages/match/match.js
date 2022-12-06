@@ -21,13 +21,13 @@ async function setup() {
     displaySignups(signups);
     displayAccepted(match);
     user = await getUser();
+    document.querySelector(".error").innerHTML = "";
 }
 
 async function displaySignups(signups) {
     const signupList = document.querySelector("#signup-list");
     const signupListClone = signupList.cloneNode(true);
     signupList.parentNode.replaceChild(signupListClone, signupList);
-    document.querySelector(".error").textContent = "";
 
     signupListClone.innerHTML = "";
     let listData = signups
@@ -81,7 +81,6 @@ function displayMatch(matchData) {
     const matchDateTime = matchData.startTime.split("T");
     document.querySelector("#starttime").innerHTML = matchDateTime[1];
     document.querySelector("#match-date").innerHTML = matchDateTime[0];
-    
 }
 
 function createKeyValuePairs(teams) {
@@ -91,13 +90,12 @@ function createKeyValuePairs(teams) {
 }
 
 async function addSignUp() {
-    if (user == undefined) {
-        displayError("Du er ikke logget ind");
-        return;
-    }
     const signUpObject = {};
     signUpObject.matchId = matchId;
-    signUpObject.refereeUsername = user.username;
+    signUpObject.refereeUsername = "";
+    if (user != undefined) {
+        signUpObject.refereeUsername = user.username;
+    }
     signUpObject.position = "ref";
 
     const options = {};
@@ -105,20 +103,19 @@ async function addSignUp() {
     options.headers = { "Content-type": "application/json" };
     options.body = JSON.stringify(signUpObject);
 
-    const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
-    const refereeIsSignedUp = await checkIfRefereeIsSignedUp(signups);
-    const refereeIsAccepted = await checkIfRefereeIsAdded(user.username);
+    await fetch(addSignUpUrl, options)
+        .then(handleHttpErrors)
+        .catch((err) => {
+            displayError(err.message);
+        });
 
-    if (!refereeIsSignedUp && !refereeIsAccepted) {
-        const addSignUp = await fetch(addSignUpUrl, options).then(handleHttpErrors);
-        const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
-        displaySignups(signups);
-    } else {
-        displayError("Dommer allerede tilmeldt");
-    }
+    const newSignups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
+    displaySignups(newSignups);
 }
 
 async function addAccepted(refereeUsername, signupId) {
+    if (!(await checkUserEligibility())) return;
+
     const acceptedObject = {};
     acceptedObject.matchId = matchId;
     acceptedObject.username = refereeUsername;
@@ -129,22 +126,16 @@ async function addAccepted(refereeUsername, signupId) {
     options.headers = { "Content-type": "application/json" };
     options.body = JSON.stringify(acceptedObject);
 
-    const refereeIsAccepted = await checkIfRefereeIsAdded(refereeUsername);
-    const refereeTeam = await fetch(teamsUrl + globalMatch.refereeTeamId).then(handleHttpErrors);
+    await fetch(matchesUrl, options)
+        .then(handleHttpErrors)
+        .catch((err) => {
+            displayError(err.message);
+        });
 
-    if (user.clubName == refereeTeam.club) {
-        if (!refereeIsAccepted) {
-            const addAccepted = await fetch(matchesUrl, options).then(handleHttpErrors);
-            const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
-            const accepted = await fetch(matchesUrl + matchId).then(handleHttpErrors);
-            displaySignups(signups);
-            displayAccepted(accepted);
-        } else {
-            displayError("Dommeren er allerede accepteret.");
-        }
-    } else {
-        displayError("Du er ikke dommeransvarlig for denne klub.");
-    }
+    const signups = await fetch(signupsUrl + matchId).then(handleHttpErrors);
+    const accepted = await fetch(matchesUrl + matchId).then(handleHttpErrors);
+    displaySignups(signups);
+    displayAccepted(accepted);
 }
 
 async function getUser() {
@@ -155,22 +146,21 @@ async function getUser() {
     return await fetch(refereeUrl, options).then(handleHttpErrors);
 }
 
-async function checkIfRefereeIsSignedUp(signups) {
-    for (let i = 0; i < signups.length; i++) {
-        if (signups[i].refereeUsername === user.username) {
-            return true;
-        }
-    }
-    return false;
-}
-
-async function checkIfRefereeIsAdded(refereeUsername) {
-    const match = await fetch(matchesUrl + matchId).then(handleHttpErrors);
-    if (match.acceptedReferees.includes(refereeUsername)) {
-        return true;
-    } else {
+async function checkUserEligibility() {
+    if (user == undefined) {
+        displayError("Du er ikke logget ind.");
         return false;
     }
+    if (!user.roles.includes("REFEREEMANAGER")) {
+        displayError("Du er ikke dommeransvarlig");
+        return false;
+    }
+    const refereeTeam = await fetch(teamsUrl + globalMatch.refereeTeamId).then(handleHttpErrors);
+    if (user.clubName != refereeTeam.club) {
+        displayError("Du er ikke medlem af denne klub");
+        return;
+    }
+    return true;
 }
 
 function displayError(msg) {
