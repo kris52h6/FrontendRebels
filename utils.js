@@ -130,7 +130,6 @@ export function hasWhiteSpace(s) {
 export function validateAllObjectWhiteSpaces(object){
   for (const field in object){
     var input = object[field]
-    console.log(hasWhiteSpace(input))
     if(hasWhiteSpace(input)) {
       return true
     }
@@ -139,7 +138,6 @@ export function validateAllObjectWhiteSpaces(object){
 }
 
 export function checkIfEmptyObject(object) {
-  console.log(object)
   for (const field in object) {
     if (object[field] === "") {
       return true

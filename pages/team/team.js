@@ -10,7 +10,6 @@ async function getTeam() {
     await fetch(teamName)
         .then(handleHttpErrors)
         .then(data => {
-        console.log(data);
         document.querySelector("#input-team-name").innerHTML = DOMPurify.sanitize(data.name);
         document.querySelector("#input-team-club").innerHTML = DOMPurify.sanitize(capitalizeFirstLetter(data.club));
         document.querySelector("#team-name-header").innerHTML = DOMPurify.sanitize(data.name)

@@ -1,5 +1,5 @@
 import {refereeUrl, myMatchesAccepted } from "../../settings.js";
-import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
+import { handleHttpErrors, capitalizeFirstLetter } from "../../utils.js";
 
 export function initMySignups() {
     setup();
@@ -63,12 +63,12 @@ function displayMatch(m) {
     match.classList.add("match");
 
     clone.querySelector(".match-time").textContent = dateFormatted;
-    clone.querySelector(".hometeam-h2").textContent = m.homeTeamName;
+    clone.querySelector(".hometeam-h2").textContent = capitalizeFirstLetter(m.homeTeamName);
     clone.querySelector(".hometeam-img").src = "./images/logos/" + m.homeTeamImg + ".png";
-    clone.querySelector(".awayteam-h2").textContent = m.awayTeamName;
+    clone.querySelector(".awayteam-h2").textContent = capitalizeFirstLetter(m.awayTeamName);
     clone.querySelector(".awayteam-img").src = "./images/logos/" + m.awayTeamImg + ".png";
     clone.querySelector(".refereeteam-img").src = "./images/logos/" + m.refereeTeamImg + ".png";
-    clone.querySelector(".referee-team").textContent = m.refereeTeamName;
+    clone.querySelector(".referee-team").textContent = capitalizeFirstLetter(m.refereeTeamName);
 
     match.id = "match-id" + m.id;
 

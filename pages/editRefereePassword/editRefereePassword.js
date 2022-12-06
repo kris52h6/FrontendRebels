@@ -44,11 +44,10 @@ async function editReferee() {
 
         const options = {}
         options.method = "GET"
-
         options.headers = {"Authorization": token}
 
         const refereeInfo = await fetch(refereeUrl, options).then(handleHttpErrors)
-        console.log(refereeInfo)
+
         document.querySelector("#input-user-username").value = (refereeInfo.username)
     }
 }
@@ -59,25 +58,6 @@ function passwordCheck(password, passwordCheck) {
     } else {
         return false
     }
-}
-
-
-function hasWhiteSpace(s) {
-    const whitespaceChars = [' ', '\t', '\n'];
-    return whitespaceChars.some(char => s.includes(char));
-}
-
-function validateRefereeWhiteSpace(refreeUpdates) {
-    for (const refereeField in refreeUpdates) {
-        var input = refreeUpdates[refereeField]
-        if (hasWhiteSpace(input)) {
-            console.log(hasWhiteSpace(input))
-            return true
-        } else {
-            return false
-        }
-    }
-
 }
 
 async function createPatchRequest(refreeUpdates){

@@ -52,6 +52,6 @@ function createClubLink(referee){
         location.replace(clubLink)
     }
     clubName = capitalizeFirstLetter(clubName)
-    console.log(clubName)
+
     document.querySelector("#club-name").innerHTML = DOMPurify.sanitize(clubName)
 }
