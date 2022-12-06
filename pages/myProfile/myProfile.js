@@ -6,7 +6,6 @@ export async function initMyProfile() {
     await myProfileButtons()
 }
 
-
 async function myProfileButtons(){
     await setProfileInfo()
     document.querySelector("#profile-change-information").onclick = goToEditProfile

@@ -87,7 +87,7 @@ function createTeamInfo(teamInfo, teamLink, size, count) {
 async function createReferees(referees) {
     if (document.querySelector(".refereesCreated") == null) {
         for (let count = 0; count < referees.length; count++) {
-            createReferee(referees[count], referees.length, count);
+            await createReferee(referees[count], referees.length, count);
         }
     }
 }
