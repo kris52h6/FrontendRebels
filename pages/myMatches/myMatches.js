@@ -1,21 +1,17 @@
-import {refereeUrl, teamsUrl, clubUrl,myMatchesSignups } from "../../settings.js";
+import {refereeUrl, myMatchesSignups } from "../../settings.js";
 import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
 
 export function initMyMatches() {
     setup();
 }
 
-let teamsKeyValue = new Map();
 let matches;
 
 async function setup() {
     matches = await getAllMatches();
     console.log(matches)
-    const teams = await getAllTeams();
-    displayMatches(matches, teams);
-    const clubs = await fetch(clubUrl).then(handleHttpErrors);
+    displayMatches(matches);
 }
-
 
 function filterMatches(divisionId) {
     const filteredMatches = matches.filter((m) => m.divisionName == divisionId);
@@ -27,26 +23,6 @@ async function getAllMatches() {
     const matchesUrl = myMatchesSignups + username
     const matches = await fetch(matchesUrl).then(handleHttpErrors);
     return matches;
-}
-
-async function getUserName(){
-    const token = "Bearer " + localStorage.getItem("token")
-    const options = {}
-    options.method = "GET"
-    options.headers = {"Authorization": token}
-    const response = await fetch(refereeUrl,options).then(handleHttpErrors)
-    return response.username
-}
-
-async function getAllTeams() {
-    const teams = await fetch(teamsUrl).then(handleHttpErrors);
-    createKeyValuePairs(teams);
-    return teams;
-}
-function createKeyValuePairs(teams) {
-    for (let i = 0; i < teams.length; i++) {
-        teamsKeyValue.set(teams[i].id, teams[i].name);
-    }
 }
 
 function displayMatches(matchesData) {
@@ -64,13 +40,6 @@ function displayMatches(matchesData) {
     }
 }
 
-function matchButtons(matchId) {
-    const matchSplit = matchId.split("id");
-    matchId = matchSplit[1];
-    const link = "#/match?matchId=" + matchId;
-    location.href = link;
-}
-
 function displayMatch(m) {
     const date = new Date(m.startTime);
     const dateOptions = {
@@ -84,12 +53,12 @@ function displayMatch(m) {
     match.classList.add("match");
 
     clone.querySelector(".match-time").textContent = dateFormatted;
-    clone.querySelector(".hometeam-h2").textContent = teamsKeyValue.get(m.homeTeamId);
+    clone.querySelector(".hometeam-h2").textContent = m.homeTeamName;
     clone.querySelector(".hometeam-img").src = "./images/logos/" + m.homeTeamImg + ".png";
-    clone.querySelector(".awayteam-h2").textContent = teamsKeyValue.get(m.awayTeamId);
+    clone.querySelector(".awayteam-h2").textContent = m.awayTeamName;
     clone.querySelector(".awayteam-img").src = "./images/logos/" + m.awayTeamImg + ".png";
     clone.querySelector(".refereeteam-img").src = "./images/logos/" + m.refereeTeamImg + ".png";
-    clone.querySelector(".referee-team").textContent = teamsKeyValue.get(m.refereeTeamId);
+    clone.querySelector(".referee-team").textContent = m.refereeTeamName;
 
     match.id = "match-id" + m.id;
 
@@ -105,4 +74,18 @@ function displayMatch(m) {
     matchContent.append(match);
 }
 
+async function getUserName(){
+    const token = "Bearer " + localStorage.getItem("token")
+    const options = {}
+    options.method = "GET"
+    options.headers = {"Authorization": token}
+    const response = await fetch(refereeUrl,options).then(handleHttpErrors)
+    return response.username
+}
 
+function matchButtons(matchId) {
+    const matchSplit = matchId.split("id");
+    matchId = matchSplit[1];
+    const link = "#/match?matchId=" + matchId;
+    location.href = link;
+}
