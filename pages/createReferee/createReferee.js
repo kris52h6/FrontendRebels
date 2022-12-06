@@ -1,5 +1,5 @@
 import {refereeUrl} from "../../settings.js";
-import {handleHttpErrors, validateAllObjectWhiteSpaces, checkIfEmptyObject} from "../../utils.js";
+import {handleHttpErrors, validateAllObjectWhiteSpaces, checkIfEmptyObject, createErrorMessage} from "../../utils.js";
 
 
 export function initCreateReferee() {
@@ -15,16 +15,10 @@ async function createReferee() {
         const newReferee = inputFields()
 
         if (checkIfEmptyObject(newReferee)) {
-            console.log("mangler felter")
-            const errorDiv = document.querySelector("#error")
-            errorDiv.innerHTML = "Venligst udfyld alle felter"
-            errorDiv.removeAttribute("hidden")
+                createErrorMessage("Venligst udfyld alle felter")
         } else if (validateAllObjectWhiteSpaces(newReferee)) {
-            console.log("har mellemrum")
-            const errorDiv = document.querySelector("#error")
-            errorDiv.innerHTML = "Du må ikke bruge mellemrum"
-            errorDiv.removeAttribute("hidden")
-        } else {
+                 createErrorMessage("Du må ikke bruge mellemrum")
+        } else { 
             const options = {}
             options.method = "POST"
             options.headers = {"Content-type": "application/json"}
@@ -34,9 +28,7 @@ async function createReferee() {
                 console.log(data)
                 location.replace("/#/login")
             }).catch(err => {
-                const errorDiv = document.querySelector("#error")
-                errorDiv.innerHTML = err.message
-                errorDiv.removeAttribute("hidden")
+                createErrorMessage(err.message  )
             })
         }
     }
@@ -55,3 +47,4 @@ function inputFields() {
 
     return newReferee
 }
+

@@ -146,3 +146,10 @@ export function checkIfEmptyObject(object) {
   return false;
 }
 
+
+export function createErrorMessage(message){
+
+  const errorDiv = document.querySelector("#error")
+  errorDiv.innerHTML = message
+  errorDiv.removeAttribute("hidden")
+}
