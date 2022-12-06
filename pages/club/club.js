@@ -1,5 +1,5 @@
 import {clubUrl, refereeUrl, teamsUrl} from "../../settings.js";
-import {handleHttpErrors} from "../../utils.js";
+import {handleHttpErrors,capitalizeFirstLetter } from "../../utils.js";
 
 const teamLink = "/#/team?teamId=";
 
@@ -19,12 +19,13 @@ async function getClub() {
 }
 
 function createClubData(club){
+    
     document.querySelector(".club-img").src = "./images/logos/" + club.imageString + ".png";
-    document.querySelector("#input-club-name").innerHTML = DOMPurify.sanitize(club.name);
+    document.querySelector("#input-club-name").innerHTML = DOMPurify.sanitize(capitalizeFirstLetter(club.name));
     document.querySelector("#input-club-address").innerHTML = DOMPurify.sanitize(club.address);
     document.querySelector("#input-club-email").innerHTML = DOMPurify.sanitize(club.email);
     document.querySelector("#club-name-header").innerHTML = DOMPurify.sanitize(club.name);
-    document.querySelector("#team-name-header").innerHTML = DOMPurify.sanitize(club.name) + " hold";
+    document.querySelector("#team-name-header").innerHTML = DOMPurify.sanitize(capitalizeFirstLetter(club.name)) + " hold";
 }
 
 function getClubFromUrl() {

@@ -156,4 +156,11 @@ export function createErrorMessage(message){
   errorDiv.removeAttribute("hidden")
 }
 
+export function capitalizeFirstLetter(string){
+  const firstLetter = string.charAt(0)
+  const firstLetterCap = firstLetter.toUpperCase()
+  const remainingLetters = string.slice(1)
+
+  return  firstLetterCap + remainingLetters  
+}
 
