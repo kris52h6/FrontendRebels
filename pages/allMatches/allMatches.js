@@ -39,7 +39,6 @@ function filterMatches(divisionId) {
 
 function clearFilterButtons() {
     const buttons = document.querySelectorAll(".btn");
-    console.log(buttons);
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("active-filter");
     }
