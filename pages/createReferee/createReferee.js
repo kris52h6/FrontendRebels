@@ -2,7 +2,9 @@
 import{refereeUrl} from "../../settings.js";
 import {handleHttpErrors, validateAllObjectWhiteSpaces, checkIfEmptyObject} from "../../utils.js";
 
+
 export function initCreateReferee(){
+
     window.addEventListener("load", createReferee())
 }
 
@@ -21,10 +23,12 @@ async function createReferee(){
 
 
         if(checkIfEmptyObject(newReferee)){
+            console.log("mangler felter")
             const errorDiv = document.querySelector("#error")
             errorDiv.innerHTML = "Venligst udfyld alle felter"
             errorDiv.removeAttribute("hidden")
-        }else if (!validateAllObjectWhiteSpaces(newReferee)) {
+        }else if (validateAllObjectWhiteSpaces(newReferee)) {
+            console.log("har mellemrum")
             const errorDiv = document.querySelector("#error")
             errorDiv.innerHTML = "Du må ikke bruge mellemrum"
             errorDiv.removeAttribute("hidden")

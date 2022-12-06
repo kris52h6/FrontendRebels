@@ -17,11 +17,6 @@ async function setup() {
 }
 
 
-function filterMatches(divisionId) {
-    const filteredMatches = matches.filter((m) => m.divisionName == divisionId);
-    displayMatches(filteredMatches);
-}
-
 async function getAllMatches() {
     const username = await getUserName()
     const matchesUrl = myMatchesAccepted + username

@@ -122,12 +122,13 @@ export async function checkAccess(role){
 }
 
 export function hasWhiteSpace(s) {
-  return s.match(/^\s*$/) !== null
+  return s.includes(" ")
 }
 
 export function validateAllObjectWhiteSpaces(object){
   for (const field in object){
     var input = object[field]
+    console.log(hasWhiteSpace(input))
     if(hasWhiteSpace(input)) {
       return true
     }
