@@ -7,15 +7,15 @@ export function initMakeAdmin(){
 }
 
 async function makeAdmin(username){
-    makeAdminUrl += username;
+    let adminUrl = makeAdminUrl + username
+
     const token = "Bearer " + localStorage.getItem("token")
     const options = {}
     const myHeaders = new Headers();
     myHeaders.append('Authorization', token);
     options.method = "PATCH"
     options.headers = myHeaders
-    const makeAdmin = await fetch(makeAdminUrl, options)
-    makeAdminUrl = "http://localhost:8080/api/users/makeAdmin/"
+    const makeAdmin = await fetch(adminUrl, options)
     location.replace("/#/getReferees")
 
 
