@@ -1,4 +1,4 @@
-import {refereeUrl, myMatchesSignups } from "../../settings.js";
+import { refereeUrl, myMatchesSignups } from "../../settings.js";
 import { handleHttpErrors, capitalizeFirstLetter } from "../../utils.js";
 
 export function initMyMatches() {
@@ -12,10 +12,9 @@ async function setup() {
     displayMatches(matches);
 }
 
-
 async function getAllMatches() {
-    const username = await getUserName()
-    const matchesUrl = myMatchesSignups + username
+    const username = await getUserName();
+    const matchesUrl = myMatchesSignups + username;
     const matches = await fetch(matchesUrl).then(handleHttpErrors);
     return matches;
 }
@@ -48,9 +47,9 @@ function displayMatch(m) {
     match.classList.add("match");
 
     clone.querySelector(".match-time").textContent = dateFormatted;
-    clone.querySelector(".hometeam-h2").textContent = capitalizeFirstLetter(m.homeTeamName);
+    clone.querySelector(".hometeam-h2").textContent = capitalizeFirstLetter(m.homeTeamName) + " " + m.divisionName;
     clone.querySelector(".hometeam-img").src = "./images/logos/" + m.homeTeamImg + ".png";
-    clone.querySelector(".awayteam-h2").textContent = capitalizeFirstLetter(m.awayTeamName);
+    clone.querySelector(".awayteam-h2").textContent = capitalizeFirstLetter(m.awayTeamName) + " " + m.divisionName;
     clone.querySelector(".awayteam-img").src = "./images/logos/" + m.awayTeamImg + ".png";
     clone.querySelector(".refereeteam-img").src = "./images/logos/" + m.refereeTeamImg + ".png";
     clone.querySelector(".referee-team").textContent = capitalizeFirstLetter(m.refereeTeamName);
@@ -69,13 +68,13 @@ function displayMatch(m) {
     matchContent.append(match);
 }
 
-async function getUserName(){
-    const token = "Bearer " + localStorage.getItem("token")
-    const options = {}
-    options.method = "GET"
-    options.headers = {"Authorization": token}
-    const response = await fetch(refereeUrl,options).then(handleHttpErrors)
-    return response.username
+async function getUserName() {
+    const token = "Bearer " + localStorage.getItem("token");
+    const options = {};
+    options.method = "GET";
+    options.headers = { Authorization: token };
+    const response = await fetch(refereeUrl, options).then(handleHttpErrors);
+    return response.username;
 }
 
 function matchButtons(matchId) {
