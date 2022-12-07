@@ -52,7 +52,7 @@ function createMyMatches() {
     a.className = "nav-link"
     a.setAttribute("href", "/myMatches")
     a.setAttribute("data-navigo", true)
-    a.textContent = "Mine Godkendte Kampe"
+    a.textContent = "Mine Tilmeldte Kampe"
 
     li.append(a)
     document.querySelector("#menu").append(li)
@@ -66,7 +66,7 @@ function createMySignups() {
     a.className = "nav-link"
     a.setAttribute("href", "/mySignups")
     a.setAttribute("data-navigo", "true")
-    a.textContent = "Mine Tilmeldte Kampe"
+    a.textContent = "Mine Godkendte Kampe"
 
     li.append(a)
     document.querySelector("#menu").append(li)
